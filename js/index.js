@@ -31,14 +31,14 @@ function drawHex(x, y, num, colour) {
 }
 
 function drawGrid() {
-  let cols = Math.ceil(canvas.width/(radius * 3));
-  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle)))+1;
-  let xOffset = canvas.width - ((cols-0.5) * radius * 3);
-  let yOffset = canvas.height - ((rows-1) * radius * Math.sin(angle));
+  let cols = Math.ceil(canvas.width/(radius * 1.5));
+  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 1;
+  let xOffset = canvas.width - ((cols-1) * radius * 1.5);
+  let yOffset = canvas.height - ((rows-0.5) * radius * Math.sin(angle) * 2);
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-      drawHex((radius * (1 + Math.cos(angle)) * (j % 2)) + (radius * i * 3) + (xOffset / 2),
-              (radius * j * Math.sin(angle)) + (yOffset / 2),
+      drawHex((radius * i * 1.5) + (xOffset / 2),
+              (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + (yOffset / 2),
               "["+i+","+j+"]",
               (i == 0 || i == cols-1 || j == 0 || j == rows-1) ? "limegreen" : "greenyellow");     
     }
