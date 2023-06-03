@@ -2,7 +2,7 @@ var zoom = 1;
 
 var shapeType = 6;
 var angle = 2 * Math.PI / shapeType;
-var radius = 25;
+var radius = 25 * zoom;
 
 var mapHexOffset = [2,2];
 var ignoreFog = true;
@@ -26,7 +26,7 @@ function drawHex(x, y, num, colour) {
     ctx.lineTo(xx, yy);
   }
   ctx.closePath();
-  ctx.lineWidth = 1;
+  ctx.lineWidth = radius/25;
   ctx.strokeStyle = 'dimgrey';
   ctx.stroke();
   ctx.fillStyle = colour;
@@ -133,7 +133,7 @@ function drawRoad(x, y, num) {
       let xx = x + radius * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
       let yy = y + radius * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
       ctx.lineTo(xx, yy);
-      ctx.lineWidth = 3;
+      ctx.lineWidth = radius/10;
       ctx.strokeStyle = 'sienna';
       ctx.stroke();
     }
@@ -146,15 +146,11 @@ function drawAoi(x, y, num) {
      (mapDetails[hexCoords]['aoi']['known'] || ignoreFog)) {
     if (mapDetails[hexCoords]['aoi']['value'] != 0) {
       ctx.beginPath();
-      ctx.arc(x, y, 1, 0, 2 * Math.PI, false)
+      ctx.arc(x, y, radius/5, 0, 2 * Math.PI, false)
       ctx.closePath();
-      ctx.lineWidth = radius/5;
-      ctx.strokeStyle = 'white';
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI, false)
-      ctx.closePath();
-      ctx.lineWidth = 2;
+      ctx.fillStyle = 'white';
+      ctx.fill();
+      ctx.lineWidth = radius/10;
       ctx.strokeStyle = 'red';
       ctx.stroke();
     }
