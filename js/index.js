@@ -24,6 +24,7 @@ var ctx = canvas.getContext('2d');
 var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
+var uiCoords = [];
 var activeHex = undefined;
 var activeUI = undefined;
 

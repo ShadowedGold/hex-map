@@ -2,25 +2,139 @@ function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left - 1;
   const y = event.clientY - rect.top - 1;
-  
-  let hex = getHex(x, y);
-  
-  if (activeHex != hex) {
-    if (activeHex != undefined) {
-      updateHexAndSurrounds(activeHex, false);
-      activeHex = hex;
-      drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
-      //console.log("activehex now ["+[hex[0],hex[1]]+"]");
-    } else {
-      activeHex = hex;
-      drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
-      drawUI(hex[2], hex[3]);
-      //console.log("activehex undefined, now ["+[hex[0],hex[1]]+"]");
+
+  if (activeHex != undefined) {
+    // a hex is active, look at buttons
+    var button = getButton(x, y);
+    if (button != undefined) {
+      // if button hit...
+      updateHexAndSurrounds(activeHex, true);
+      if (button[0] == 0 && activeUI == undefined) {
+        // if cancel button hit...
+        // if top level of UI...
+        // hex no longer active
+        activeHex = undefined;
+      } else {
+        handleButtonOutcome(getActiveUIList()[button[0]]);
+        drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
+        drawUI(activeHex[2], activeHex[3]);
+      }
     }
   } else {
-    activeHex = undefined;
-    updateHexAndSurrounds(hex, false);
-    //console.log("reset ["+[hex[0],hex[1]]+"]");
+    // a hex is not active, set active hex
+    var hex = getHex(x, y);
+    activeHex = hex;
+    drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
+    drawUI(hex[2], hex[3]);
+  }
+}
+
+function handleButtonOutcome(button) {
+  switch (activeUI) {
+    case undefined:
+      // first level of ui
+      switch (button) {
+        case "eye":
+          activeUI = "eye";
+          break;
+        case "biomes":
+          activeUI = "biomes";
+          break;
+        case "roads":
+          activeUI = "roads";
+          break;
+        case "aoi1":
+          activeUI = "aoi";
+          break;
+      }
+      break;
+    case "eye":
+      // toggle visibility ui
+      switch (button) {
+        case "cancel":
+          activeUI = undefined;
+          break;
+        case "biomes":
+          // toggle biome visibility
+          break;
+        case "roads":
+          // toggle roads visibility
+          break;
+        case "aoi1":
+          // toggle aoi visibility
+          break;
+      }
+      break;
+    case "biomes":
+      // alter biomes
+      switch (button) {
+        case "cancel":
+          activeUI = undefined;
+          break;
+        case "hex":
+          activeUI = "hexColours";
+          break;
+        case "tri0":
+          activeUI = "tri";
+          break;
+      }
+      break;
+    case "tri":
+      // alter tri
+      switch (button) {
+        case "cancel":
+          activeUI = "biomes";
+          break;
+        default:
+          activeUI = "triColours";
+          // pass button to something
+          break;
+      }
+      break;
+    case "hexColours":
+      // alter hex biome colour
+      switch (button) {
+        case "cancel":
+          activeUI = "biomes";
+          break;
+        default:
+          // pass button to something
+          break;
+      }
+      break;
+    case "triColours":
+      // alter tri biome colour
+      switch (button) {
+        case "cancel":
+          activeUI = "tri";
+          break;
+        default:
+          // pass button to something
+          break;
+      }
+      break;
+    case "roads":
+      // toggle roads
+      switch (button) {
+        case "cancel":
+          activeUI = undefined;
+          break;
+        default:
+          updateRoads(button);
+          break;
+      }
+      break;
+    case "aoi":
+      // toggle aoi
+      switch (button) {
+        case "cancel":
+          activeUI = undefined;
+          break;
+        default:
+          updateAoi(button);
+          break;
+      }
+      break;
   }
 }
 
@@ -41,6 +155,18 @@ function getHex(canvasX, canvasY) {
   return gotHex;
 }
 
+function getButton(canvasX, canvasY) {
+  let gotButton = undefined;
+
+  uiCoords.forEach(button => {
+    let a = Math.abs(button[1] - canvasX);
+    let b = Math.abs(button[2] - canvasY);
+    let h = Math.sqrt((a*a)+(b*b));
+    if (h <= buttonRadius) gotButton = button;
+  });
+  return gotButton;
+}
+
 function updateHexAndSurrounds(hex, expanded) {
   let updateHexes = getSurroundingHexes(hex[0], hex[1], expanded);
   updateHexes.push([hex[0], hex[1]]);
@@ -57,44 +183,43 @@ function updateHexAndSurrounds(hex, expanded) {
   });
 }
 
-function drawUI(x, y) {
-  let uiList = [];
-
+function getActiveUIList() {
   switch (activeUI) {
     case undefined:
       // first level of ui
-      uiList = ["cancel", "eye", "biomes", "roads", "aoi1"];
-      break;
+      return ["cancel", "eye", "biomes", "roads", "aoi1"];
     case "eye":
       // toggle visibility ui
-      uiList = ["cancel", "biomes", "roads", "aoi1"];
-      break;
+      return ["cancel", "biomes", "roads", "aoi1"];
     case "biomes":
       // alter biomes
-      uiList = ["cancel", "hex", "tri0"];
-      break;
+      return ["cancel", "hex", "tri0"];
     case "tri":
       // alter tri
-      uiList = ["cancel", "tri0", "tri1", "tri2", "tri3", "tri4", "tri5"];
-      break;
-    case "colours":
-      // alter hex/choose biome colour
-      uiList = ["cancel", "plains", "forest", "swamp", "mountain", "snow", "desert", "water"];
-      break;
+      return ["cancel", "tri0", "tri1", "tri2", "tri3", "tri4", "tri5"];
+    case "hexColours":
+      // alter hex biome colour
+      return ["cancel", "plains", "forest", "swamp", "mountain", "snow", "desert", "water"];
+    case "triColours":
+      // alter tri biome colour
+      return ["cancel", "plains", "forest", "swamp", "mountain", "snow", "desert", "water"];
     case "roads":
       // toggle roads
-      uiList = ["cancel", "road0", "road1", "road2", "road3", "road4", "road5"];
-      break;
+      return ["cancel", "road0", "road1", "road2", "road3", "road4", "road5"];
     case "aoi":
       // toggle aoi
-      uiList = ["cancel", "aoi0", "aoi1", "aoi2"];
-      break;
+      return ["cancel", "aoi0", "aoi1", "aoi2"];
   }
+}
+
+function drawUI(x, y) {
+  uiCoords = [];
+  let uiList = getActiveUIList();
 
   let buttonAngle = 2 * Math.PI / uiList.length;
   let buttonRingRadius = radius * 2;
 
-  uiList.forEach((button,i) => {
+  uiList.forEach((button, i) => {
     let xx = x + buttonRingRadius * Math.cos((buttonAngle * i) - angleOffset) * Math.sqrt(3)/2;
     let yy = y + buttonRingRadius * Math.sin((buttonAngle * i) - angleOffset) * Math.sqrt(3)/2;
 
@@ -106,6 +231,8 @@ function drawUI(x, y) {
     ctx.lineWidth = radius/10;
     ctx.strokeStyle = 'grey';
     ctx.stroke();
+
+    uiCoords.push([i, xx, yy]);
   });
 }
 
@@ -215,4 +342,20 @@ function pathButtonOutline(x, y) {
   ctx.beginPath();
   ctx.arc(x, y, radius/2, 0, 2 * Math.PI, false);
   ctx.closePath();
+}
+
+function updateHexBiome(biome) {
+
+}
+
+function updateTriBiome(biome) {
+
+}
+
+function updateRoads(road) {
+
+}
+
+function updateAoi(aoi) {
+
 }
