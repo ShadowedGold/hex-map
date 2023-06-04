@@ -35,15 +35,18 @@ function handleButtonOutcome(button) {
       // first level of ui
       switch (button) {
         case "eye":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeUI = "eye";
           break;
         case "biomes":
           activeUI = "biomes";
           break;
         case "roads":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeUI = "roads";
           break;
         case "aoi1":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeUI = "aoi";
           break;
       }
@@ -55,13 +58,16 @@ function handleButtonOutcome(button) {
           activeUI = undefined;
           break;
         case "biomes":
-          // toggle biome visibility
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          toggleVisibility('biomes');
           break;
         case "roads":
-          // toggle roads visibility
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          toggleVisibility('roads');
           break;
         case "aoi1":
-          // toggle aoi visibility
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          toggleVisibility('aoi');
           break;
       }
       break;
@@ -87,7 +93,7 @@ function handleButtonOutcome(button) {
           break;
         default:
           activeUI = "triColours";
-          // pass button to something
+          activeTri = Number(button.substring(3));
           break;
       }
       break;
@@ -98,7 +104,8 @@ function handleButtonOutcome(button) {
           activeUI = "biomes";
           break;
         default:
-          // pass button to something
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          updateHexBiome(button);
           break;
       }
       break;
@@ -109,7 +116,8 @@ function handleButtonOutcome(button) {
           activeUI = "tri";
           break;
         default:
-          // pass button to something
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          updateTriBiome(button);
           break;
       }
       break;
@@ -120,7 +128,8 @@ function handleButtonOutcome(button) {
           activeUI = undefined;
           break;
         default:
-          updateRoads(button);
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          updateRoads(Number(button.substring(4)));
           break;
       }
       break;
@@ -131,7 +140,8 @@ function handleButtonOutcome(button) {
           activeUI = undefined;
           break;
         default:
-          updateAoi(button);
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          updateAoi(Number(button.substring(3)));
           break;
       }
       break;
@@ -229,7 +239,7 @@ function drawUI(x, y) {
     drawButton(xx, yy, button);
     pathButtonOutline(xx, yy);
     ctx.lineWidth = radius/10;
-    ctx.strokeStyle = 'grey';
+    ctx.strokeStyle = getButtonStateColour(button);
     ctx.stroke();
 
     uiCoords.push([i, xx, yy]);
@@ -345,17 +355,91 @@ function pathButtonOutline(x, y) {
 }
 
 function updateHexBiome(biome) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
 
+  for (let i = 0; i < shapeType; i++) {
+    mapDetails[hexName]['biomes']['value'][i] = biome;
+  }
 }
 
 function updateTriBiome(biome) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
 
+  mapDetails[hexName]['biomes']['value'][activeTri] = biome;
 }
 
 function updateRoads(road) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
 
+  if (mapDetails[hexName]['roads']['value'].includes(road)) {
+    mapDetails[hexName]['roads']['value'].splice(mapDetails[hexName]['roads']['value'].indexOf(road),1);
+  } else {
+    mapDetails[hexName]['roads']['value'].push(road);
+  }
 }
 
 function updateAoi(aoi) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
 
+  mapDetails[hexName]['aoi']['value'] = aoi;
+}
+
+function toggleVisibility(feature) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
+
+  mapDetails[hexName][feature]['known'] = !mapDetails[hexName][feature]['known'];
+}
+
+function getButtonStateColour(button) {
+  let hexName = getHexName([activeHex[0], activeHex[1]]);
+  let colour = 'grey';
+
+  switch (activeUI) {
+    case "eye":
+      // toggle visibility ui
+      switch (button) {
+        case "biomes":
+          if (mapDetails[hexName]['biomes']['known']) colour = 'yellow';
+          break;
+        case "roads":
+          if (mapDetails[hexName]['roads']['known']) colour = 'yellow';
+          break;
+        case "aoi1":
+          if (mapDetails[hexName]['aoi']['known']) colour = 'yellow';
+          break;
+      }
+      break;
+    case "triColours":
+      // alter tri biome colour
+      switch (button) {
+        case "cancel":
+          break;
+        default:
+          if (mapDetails[hexName]['biomes']['value'][activeTri] == button) colour = 'yellow';
+          break;
+      }
+      break;
+    case "roads":
+      // toggle roads
+      switch (button) {
+        case "cancel":
+          break;
+        default:
+          if (mapDetails[hexName]['roads']['value'].includes(Number(button.substring(4)))) colour = 'yellow';
+          break;
+      }
+      break;
+    case "aoi":
+      // toggle aoi
+      switch (button) {
+        case "cancel":
+          break;
+        default:
+          if (mapDetails[hexName]['aoi']['value'] == Number(button.substring(3))) colour = 'yellow';
+          break;
+      }
+      break;
+  }
+
+  return colour;
 }

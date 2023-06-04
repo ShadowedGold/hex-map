@@ -273,3 +273,33 @@ var mapDetails = {
     }
   }
 };
+
+function prepHexForUpdate(num) {
+  let hexName = getHexName(num);
+
+  if (!mapDetails.hasOwnProperty(hexName)) addNewMapHex(num);
+}
+
+function addNewMapHex(num) {
+  mapDetails[getHexName(num)] = {
+    roads: {
+      value: [],
+      known: false
+    },
+    biomes: {
+      value: [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      known: false
+    },
+    aoi: {
+      value: 0,
+      known: false
+    }
+  };
+}

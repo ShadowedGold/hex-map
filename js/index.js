@@ -27,6 +27,7 @@ var hexCoords = [];
 var uiCoords = [];
 var activeHex = undefined;
 var activeUI = undefined;
+var activeTri = undefined;
 
 drawGrid();
 
@@ -127,11 +128,15 @@ function getSurroundingHexes(col, row, expanded) {
   return hexFoundArr;
 }
 
+function getHexName(num) {
+  return 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
+}
+
 function drawBiome(x, y, num) {
-  let hexCoords = 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
-  if (mapDetails.hasOwnProperty(hexCoords) &&
-     (mapDetails[hexCoords]['biomes']['known'] || ignoreFog)) {
-    let biomeNodes = mapDetails[hexCoords]['biomes']['value'];
+  let hexName = getHexName(num);
+  if (mapDetails.hasOwnProperty(hexName) &&
+     (mapDetails[hexName]['biomes']['known'] || ignoreFog)) {
+    let biomeNodes = mapDetails[hexName]['biomes']['value'];
 
     drawBiomeObject(x, y, radius, biomeNodes);
   }
@@ -175,10 +180,10 @@ function getBiomeColour(biome) {
 }
 
 function drawRoad(x, y, num) {
-  let hexCoords = 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
-  if (mapDetails.hasOwnProperty(hexCoords) &&
-     (mapDetails[hexCoords]['roads']['known'] || ignoreFog)) {
-    let roadNodes = mapDetails[hexCoords]['roads']['value'];
+  let hexName = getHexName(num);
+  if (mapDetails.hasOwnProperty(hexName) &&
+     (mapDetails[hexName]['roads']['known'] || ignoreFog)) {
+    let roadNodes = mapDetails[hexName]['roads']['value'];
 
     drawRoadObject(x, y, radius, roadNodes);
   }
@@ -198,11 +203,11 @@ function drawRoadObject(x, y, r, roadNodes) {
 }
 
 function drawAoi(x, y, num) {
-  let hexCoords = 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
-  if (mapDetails.hasOwnProperty(hexCoords) &&
-     (mapDetails[hexCoords]['aoi']['known'] || ignoreFog)) {
-    if (mapDetails[hexCoords]['aoi']['value'] != 0) {
-      drawAoiObject(x, y, mapDetails[hexCoords]['aoi']['value']);
+  let hexName = getHexName(num);
+  if (mapDetails.hasOwnProperty(hexName) &&
+     (mapDetails[hexName]['aoi']['known'] || ignoreFog)) {
+    if (mapDetails[hexName]['aoi']['value'] != 0) {
+      drawAoiObject(x, y, mapDetails[hexName]['aoi']['value']);
     }
   }
 }
