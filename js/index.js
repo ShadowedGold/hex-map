@@ -12,11 +12,32 @@ var canvas = document.createElement('canvas');
 canvas.id = "hexCanvas";
 canvas.width = window.innerWidth - 12;
 canvas.height = window.innerHeight - 12;
+canvas.addEventListener('mousedown', function(e) {
+  getCursorPosition(canvas, e);
+});
 
 document.body.appendChild(canvas);
 var ctx = canvas.getContext('2d');
 
-var dimensions = drawGrid();
+var dimensions = getDimensions();
+var offsets = getOffsets();
+var hexCoords = [];
+
+drawGrid();
+
+function getDimensions() {
+  let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
+  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 1;
+
+  return {cols: cols, rows: rows};
+}
+
+function getOffsets() {
+  let x = (canvas.width - ((dimensions.cols-1) * radius * 1.5)) / 2;
+  let y = (canvas.height - ((dimensions.rows-0.5) * radius * Math.sin(angle) * 2)) / 2;
+
+  return {x: x, y: y};
+}
 
 function drawHex(x, y, num, colour) {
   ctx.beginPath();
@@ -42,21 +63,16 @@ function drawHex(x, y, num, colour) {
 }
 
 function drawGrid() {
-  let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
-  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 1;
-  let xOffset = canvas.width - ((cols-1) * radius * 1.5);
-  let yOffset = canvas.height - ((rows-0.5) * radius * Math.sin(angle) * 2);
-  
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      drawHex((radius * i * 1.5) + (xOffset / 2),
-              (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + (yOffset / 2),
-              [i,j],
-              (i == 0 || i == cols-1 || j == 0 || j == rows-1) ? "grey" : "darkgray");     
+  hexCoords = [];
+  for (let i = 0; i < dimensions.cols; i++) {
+    for (let j = 0; j < dimensions.rows; j++) {
+      let x = (radius * i * 1.5) + offsets.x;
+      let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y;
+      drawHex(x, y, [i,j],
+              (i == 0 || i == dimensions.cols-1 || j == 0 || j == dimensions.rows-1) ? "grey" : "darkgray");
+      hexCoords.push([i,j,x,y]);
     }
   }
-
-  return [cols, rows];
 }
 
 function getSurroundingHexes(x, y) {
