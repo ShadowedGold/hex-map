@@ -22,6 +22,7 @@ var ctx = canvas.getContext('2d');
 var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
+var activeHex = undefined;
 
 drawGrid();
 
@@ -39,14 +40,8 @@ function getOffsets() {
   return {x: x, y: y};
 }
 
-function drawHex(x, y, num, colour) {
-  ctx.beginPath();
-  for (let i = 0; i < shapeType; i++) {
-    let xx = x + radius * Math.cos(angle * i);
-    let yy = y + radius * Math.sin(angle * i);
-    ctx.lineTo(xx, yy);
-  }
-  ctx.closePath();
+function drawHex(x, y, num, colour, highlight) {
+  pathHex(x, y);
   ctx.lineWidth = radius/25;
   ctx.strokeStyle = 'dimgrey';
   ctx.stroke();
@@ -60,6 +55,21 @@ function drawHex(x, y, num, colour) {
   drawBiome(x, y, num);
   drawRoad(x, y, num);
   drawAoi(x, y, num);
+  drawHighlight(x, y, highlight);
+}
+
+function pathHex(x, y) {
+  ctx.beginPath();
+  for (let i = 0; i < shapeType; i++) {
+    let xx = x + radius * Math.cos(angle * i);
+    let yy = y + radius * Math.sin(angle * i);
+    ctx.lineTo(xx, yy);
+  }
+  ctx.closePath();
+}
+
+function getHexBgColour(col, row) {
+  return (col == 0 || col == dimensions.cols-1 || row == 0 || row == dimensions.rows-1) ? "grey" : "darkgray";
 }
 
 function drawGrid() {
@@ -68,28 +78,27 @@ function drawGrid() {
     for (let j = 0; j < dimensions.rows; j++) {
       let x = (radius * i * 1.5) + offsets.x;
       let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y;
-      drawHex(x, y, [i,j],
-              (i == 0 || i == dimensions.cols-1 || j == 0 || j == dimensions.rows-1) ? "grey" : "darkgray");
+      drawHex(x, y, [i,j], getHexBgColour(i, j));
       hexCoords.push([i,j,x,y]);
     }
   }
 }
 
-function getSurroundingHexes(x, y) {
-  let hexSearchArr = [[-1, (x % 2) ? 0 : -1],
-                      [-1, (x % 2) ? 1 :  0],
+function getSurroundingHexes(col, row) {
+  let hexSearchArr = [[-1, (col % 2) ? 0 : -1],
+                      [-1, (col % 2) ? 1 :  0],
                       [ 0, -1],
                       [ 0,  1],
-                      [ 1, (x % 2) ? 0 : -1],
-                      [ 1, (x % 2) ? 1 :  0]];
+                      [ 1, (col % 2) ? 0 : -1],
+                      [ 1, (col % 2) ? 1 :  0]];
   let hexFoundArr = [];
 
-  for (let i = 0; i < 6; i++) {
-    if (x + hexSearchArr[i][0] >= 0 &&
-        x + hexSearchArr[i][0] <= dimensions[0] - 1 &&
-        y + hexSearchArr[i][1] >= 0 &&
-        y + hexSearchArr[i][1] <= dimensions[1] - 1) {
-      hexFoundArr.push([x + hexSearchArr[i][0], y + hexSearchArr[i][1]]);
+  for (let i = 0; i < hexSearchArr.length; i++) {
+    if (col + hexSearchArr[i][0] >= 0 &&
+        col + hexSearchArr[i][0] <= dimensions.cols - 1 &&
+        row + hexSearchArr[i][1] >= 0 &&
+        row + hexSearchArr[i][1] <= dimensions.rows - 1) {
+      hexFoundArr.push([col + hexSearchArr[i][0], row + hexSearchArr[i][1]]);
     }
   }
 
@@ -170,5 +179,14 @@ function drawAoi(x, y, num) {
       ctx.strokeStyle = 'red';
       ctx.stroke();
     }
+  }
+}
+
+function drawHighlight(x, y, highlight) {
+  if (highlight != undefined) {
+    pathHex(x, y);
+    ctx.lineWidth = radius/10;
+    ctx.strokeStyle = highlight;
+    ctx.stroke();
   }
 }
