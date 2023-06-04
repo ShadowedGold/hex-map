@@ -2,7 +2,9 @@ var zoom = 1;
 
 var shapeType = 6;
 var angle = 2 * Math.PI / shapeType;
+var angleOffset = 2 * Math.PI / 4;
 var radius = 25 * zoom;
+var buttonRadius = radius / 2;
 
 var mapHexOffset = [2,2];
 var ignoreFog = true;
@@ -23,6 +25,7 @@ var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
 var activeHex = undefined;
+var activeUI = undefined;
 
 drawGrid();
 
@@ -50,6 +53,8 @@ function drawHex(x, y, num, colour, highlight) {
   ctx.fillStyle = 'silver';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  let fontsize = radius * 0.4;
+  ctx.font = fontsize+"px sans-serif";
   ctx.fillText("["+num+"]", x, y);
 
   drawBiome(x, y, num);
@@ -84,14 +89,30 @@ function drawGrid() {
   }
 }
 
-function getSurroundingHexes(col, row) {
+function getSurroundingHexes(col, row, expanded) {
   let hexSearchArr = [[-1, (col % 2) ? 0 : -1],
                       [-1, (col % 2) ? 1 :  0],
                       [ 0, -1],
                       [ 0,  1],
                       [ 1, (col % 2) ? 0 : -1],
                       [ 1, (col % 2) ? 1 :  0]];
+  let expandedSearchArr = [[-2, -1],
+                           [-2,  0],
+                           [-2,  1],
+                           [-1, (col % 2) ? -1 : -2],
+                           [-1, (col % 2) ?  2 :  1],
+                           [ 0, -2],
+                           [ 0,  2],
+                           [ 1, (col % 2) ? -1 : -2],
+                           [ 1, (col % 2) ?  2 :  1],
+                           [ 2, -1],
+                           [ 2,  0],
+                           [ 2,  1]];
   let hexFoundArr = [];
+
+  if (expanded) {
+    hexSearchArr.push(...expandedSearchArr);
+  }
 
   for (let i = 0; i < hexSearchArr.length; i++) {
     if (col + hexSearchArr[i][0] >= 0 &&
@@ -111,19 +132,23 @@ function drawBiome(x, y, num) {
      (mapDetails[hexCoords]['biomes']['known'] || ignoreFog)) {
     let biomeNodes = mapDetails[hexCoords]['biomes']['value'];
 
-    for (let i = 0; i < biomeNodes.length; i++) {
-      ctx.beginPath();
-      ctx.lineTo(x, y);
-      let xx = x + radius * Math.cos(angle * (i-2));
-      let yy = y + radius * Math.sin(angle * (i-2));
-      ctx.lineTo(xx, yy);
-      xx = x + radius * Math.cos(angle * (i-1));
-      yy = y + radius * Math.sin(angle * (i-1));
-      ctx.lineTo(xx, yy);
-      ctx.closePath();
-      ctx.fillStyle = getBiomeColour(mapDetails[hexCoords]['biomes']['value'][i]);
-      ctx.fill();
-    }
+    drawBiomeObject(x, y, radius, biomeNodes);
+  }
+}
+
+function drawBiomeObject(x, y, r, biomeNodes) {
+  for (let i = 0; i < biomeNodes.length; i++) {
+    ctx.beginPath();
+    ctx.lineTo(x, y);
+    let xx = x + r * Math.cos(angle * (i-2));
+    let yy = y + r * Math.sin(angle * (i-2));
+    ctx.lineTo(xx, yy);
+    xx = x + r * Math.cos(angle * (i-1));
+    yy = y + r * Math.sin(angle * (i-1));
+    ctx.lineTo(xx, yy);
+    ctx.closePath();
+    ctx.fillStyle = getBiomeColour(biomeNodes[i]);
+    ctx.fill();
   }
 }
 
@@ -143,6 +168,8 @@ function getBiomeColour(biome) {
       return "tan";
     case "snow":
       return "azure";
+    default:
+      return "white";
   }
 }
 
@@ -152,16 +179,20 @@ function drawRoad(x, y, num) {
      (mapDetails[hexCoords]['roads']['known'] || ignoreFog)) {
     let roadNodes = mapDetails[hexCoords]['roads']['value'];
 
-    for (let i = 0; i < roadNodes.length; i++) {
-      ctx.beginPath();
-      ctx.lineTo(x, y);
-      let xx = x + radius * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
-      let yy = y + radius * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
-      ctx.lineTo(xx, yy);
-      ctx.lineWidth = radius/10;
-      ctx.strokeStyle = 'sienna';
-      ctx.stroke();
-    }
+    drawRoadObject(x, y, radius, roadNodes);
+  }
+}
+
+function drawRoadObject(x, y, r, roadNodes) {
+  for (let i = 0; i < roadNodes.length; i++) {
+    ctx.beginPath();
+    ctx.lineTo(x, y);
+    let xx = x + r * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
+    let yy = y + r * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
+    ctx.lineTo(xx, yy);
+    ctx.lineWidth = radius/10;
+    ctx.strokeStyle = 'sienna';
+    ctx.stroke();
   }
 }
 
@@ -170,16 +201,33 @@ function drawAoi(x, y, num) {
   if (mapDetails.hasOwnProperty(hexCoords) &&
      (mapDetails[hexCoords]['aoi']['known'] || ignoreFog)) {
     if (mapDetails[hexCoords]['aoi']['value'] != 0) {
-      ctx.beginPath();
-      ctx.arc(x, y, radius/5, 0, 2 * Math.PI, false)
-      ctx.closePath();
-      ctx.fillStyle = 'white';
-      ctx.fill();
-      ctx.lineWidth = radius/10;
-      ctx.strokeStyle = 'red';
-      ctx.stroke();
+      drawAoiObject(x, y, mapDetails[hexCoords]['aoi']['value']);
     }
   }
+}
+
+function drawAoiObject(x, y, value) {
+  let colour = "";
+  switch (value) {
+    case 1:
+      colour = "red";
+      break;
+    case 2:
+      colour = "blueviolet";
+      break;
+    default:
+      colour = "black";
+      break;
+  }
+
+  ctx.beginPath();
+  ctx.arc(x, y, radius/5, 0, 2 * Math.PI, false);
+  ctx.closePath();
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  ctx.lineWidth = radius/10;
+  ctx.strokeStyle = colour;
+  ctx.stroke();
 }
 
 function drawHighlight(x, y, highlight) {

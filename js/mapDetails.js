@@ -268,7 +268,7 @@ var mapDetails = {
       known: false
     },
     aoi: {
-      value: 2,
+      value: 1,
       known: true
     }
   }
