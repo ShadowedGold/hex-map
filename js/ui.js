@@ -19,6 +19,11 @@ function getCursorPosition(canvas, event) {
         drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
         drawUI(activeHex[2], activeHex[3]);
       }
+    } else {
+      // if no button hit...
+      updateHexAndSurrounds(activeHex, true);
+      activeHex = undefined;
+      activeUI = undefined;
     }
   } else {
     // a hex is not active, set active hex
