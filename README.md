@@ -9,4 +9,3 @@ A hex map experiment
 - Drag to pan functionality
 - Zoom on scroll
 - Update on window resize
-- Opacity overlay on fog
