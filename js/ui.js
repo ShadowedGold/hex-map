@@ -1,55 +1,3 @@
-function getCursorPosition(canvas, event) {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left - 1;
-  const y = event.clientY - rect.top - 1;
-
-  let button = getButton(x, y, menuUICoords);
-  if (button != undefined) {
-    // if top menu ui button hit...
-    handleMenuButtonOutcome(getActiveMenuUIList()[button[0]]);
-    drawGrid();
-    // if there's an active hex, draw it and its ui back in
-    if (activeHex != undefined) {
-      drawActiveHexAndUI();
-    }
-  } else if (editMode && activeHex != undefined) {
-    // no top menu ui button hit...
-    // a hex is active, and we're in edit mode, look at hex ui buttons
-    button = getButton(x, y, hexUICoords);
-    if (button != undefined) {
-      // if hex ui button hit...
-      // refresh the grid
-      drawGrid();
-      if (button[0] == 0 && activeHexUI == undefined) {
-        // if top level cancel button hit...
-        // hex no longer active
-        activeHex = undefined;
-      } else {
-        // button other than top level cancel button hit...
-        // highlight the hex and update the ui
-        handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
-        drawActiveHexAndUI();
-      }
-    } else {
-      // if no hex ui button hit...
-      // refresh the grid
-      // hex and hex ui no longer active
-      drawGrid();
-      activeHex = undefined;
-      activeHexUI = undefined;
-    }
-  } else if (editMode) {
-    // a hex is not active, and we're in editMode, set active hex
-    // highlight the hex and update the ui
-    let hex = getHexFromXY(x, y);
-    activeHex = hex;
-    drawActiveHexAndUI();
-  }
-
-  // update the top menu ui
-  drawMenuUI();
-}
-
 function drawActiveHexAndUI() {
   drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
   drawHexUI(activeHex[2], activeHex[3]);
@@ -119,6 +67,7 @@ function handleHexButtonOutcome(button) {
           break;
         default:
           activeHexUI = "triColours";
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeTri = Number(button.substring(3));
           break;
       }

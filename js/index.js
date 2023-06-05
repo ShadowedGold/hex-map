@@ -11,7 +11,8 @@ canvas.id = "hexCanvas";
 canvas.width = window.innerWidth - 12;
 canvas.height = window.innerHeight - 12;
 canvas.addEventListener('mousedown', function(e) {
-  getCursorPosition(canvas, e);
+  mousePos = getCursorPosition(canvas, e);
+  handleMouseDown(mousePos.x, mousePos.y);
 });
 
 document.body.appendChild(canvas);
@@ -44,6 +45,14 @@ window.onwheel = function(e) {
   handleWheel(e);
 }
 
+function getCursorPosition(canvas, event) {
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left - 1;
+  const y = event.clientY - rect.top - 1;
+
+  return {x: x, y: y};
+}
+
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
   let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 1;
@@ -56,15 +65,6 @@ function getOffsets() {
   let y = (canvas.height - ((dimensions.rows-0.5) * radius * Math.sin(angle) * 2)) / 2;
 
   return {x: x, y: y};
-}
-
-function handleResize() {
-  canvas.width = window.innerWidth - 12;
-  canvas.height = window.innerHeight - 12;
-  dimensions = getDimensions();
-  offsets = getOffsets();
-
-  redrawAll();
 }
 
 function updateActiveHexXY() {
@@ -84,52 +84,6 @@ function redrawAll(zoom) {
     drawActiveHexAndUI();
   }
   drawMenuUI();
-}
-
-function handleWheel(event) {
-  let newZoom = zoom + event.deltaY * -0.0025;
-
-  // Restrict zoom level
-  newZoom = Math.min(Math.max(0.75, newZoom), 2.25);
-
-  if (newZoom != zoom) {
-    zoom = newZoom;
-    radius = 25 * zoom;
-
-    if (activeHex != undefined) {
-      var percentX = activeHex[0] / dimensions.cols;
-      var percentY = activeHex[1] / dimensions.rows;
-    }
-
-    dimensions = getDimensions();
-    offsets = getOffsets();
-
-    if (activeHex != undefined) {
-      let newX = Math.round(dimensions.cols * percentX);
-      let newY = Math.round(dimensions.rows * percentY);
-
-      if (newX == dimensions.cols-1) newX--;
-      if (newX == 0) newX++;
-      if (newY == dimensions.rows-1) newY--;
-      if (newY == 0) newY++;
-      
-      let offsetX = activeHex[0] - newX;
-      let offsetY = activeHex[1] - newY;
-
-      if (offsetX % 2) {
-        offsetX += (Math.round(percentX)) ? 1 : -1;
-      }
-
-      mapHexOffset[0] -= offsetX;
-      mapHexOffset[1] -= offsetY;
-
-      activeHex[0] -= offsetX;
-      activeHex[1] -= offsetY;
-    }
-
-    // redraw at new zoom
-    redrawAll(true);
-  }
 }
 
 function drawHex(x, y, num, colour, highlight) {
