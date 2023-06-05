@@ -40,6 +40,9 @@ var fogTransparency = 0.50;
 drawGrid();
 drawMenuUI();
 window.onresize = handleResize;
+window.onwheel = function(e) {
+  handleWheel(e);
+}
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
@@ -61,9 +64,72 @@ function handleResize() {
   dimensions = getDimensions();
   offsets = getOffsets();
 
+  redrawAll();
+}
+
+function updateActiveHexXY() {
+  hexCoords.some(hex => {
+    if (activeHex[0] == hex[0] && activeHex[1] == hex[1]) {
+      activeHex[2] = hex[2];
+      activeHex[3] = hex[3];
+      return true;
+    }
+  });
+}
+
+function redrawAll(zoom) {
   drawGrid();
-  if (activeHex != undefined) drawActiveHexAndUI();
+  if (activeHex != undefined) {
+    if (zoom) updateActiveHexXY();
+    drawActiveHexAndUI();
+  }
   drawMenuUI();
+}
+
+function handleWheel(event) {
+  let newZoom = zoom + event.deltaY * -0.0025;
+
+  // Restrict zoom level
+  newZoom = Math.min(Math.max(0.75, newZoom), 2.25);
+
+  if (newZoom != zoom) {
+    zoom = newZoom;
+    radius = 25 * zoom;
+
+    if (activeHex != undefined) {
+      var percentX = activeHex[0] / dimensions.cols;
+      var percentY = activeHex[1] / dimensions.rows;
+    }
+
+    dimensions = getDimensions();
+    offsets = getOffsets();
+
+    if (activeHex != undefined) {
+      let newX = Math.round(dimensions.cols * percentX);
+      let newY = Math.round(dimensions.rows * percentY);
+
+      if (newX == dimensions.cols-1) newX--;
+      if (newX == 0) newX++;
+      if (newY == dimensions.rows-1) newY--;
+      if (newY == 0) newY++;
+      
+      let offsetX = activeHex[0] - newX;
+      let offsetY = activeHex[1] - newY;
+
+      if (offsetX % 2) {
+        offsetX += (Math.round(percentX)) ? 1 : -1;
+      }
+
+      mapHexOffset[0] -= offsetX;
+      mapHexOffset[1] -= offsetY;
+
+      activeHex[0] -= offsetX;
+      activeHex[1] -= offsetY;
+    }
+
+    // redraw at new zoom
+    redrawAll(true);
+  }
 }
 
 function drawHex(x, y, num, colour, highlight) {
@@ -247,13 +313,13 @@ function drawAoi(x, y, num) {
      (mapDetails[hexName]['aoi']['known'] || ignoreFog)) {
     if (mapDetails[hexName]['aoi']['value'] != 0) {
       if (!mapDetails[hexName]['aoi']['known']) ctx.globalAlpha = fogTransparency;
-      drawAoiObject(x, y, mapDetails[hexName]['aoi']['value']);
+      drawAoiObject(x, y, radius, mapDetails[hexName]['aoi']['value']);
       ctx.globalAlpha = 1;
     }
   }
 }
 
-function drawAoiObject(x, y, value) {
+function drawAoiObject(x, y, r, value) {
   let colour = "";
   switch (value) {
     case 1:
@@ -268,11 +334,11 @@ function drawAoiObject(x, y, value) {
   }
 
   ctx.beginPath();
-  ctx.arc(x, y, radius/5, 0, 2 * Math.PI, false);
+  ctx.arc(x, y, r/5, 0, 2 * Math.PI, false);
   ctx.closePath();
   ctx.fillStyle = 'white';
   ctx.fill();
-  ctx.lineWidth = radius/10;
+  ctx.lineWidth = r/10;
   ctx.strokeStyle = colour;
   ctx.stroke();
 }

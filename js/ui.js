@@ -41,7 +41,7 @@ function getCursorPosition(canvas, event) {
   } else if (editMode) {
     // a hex is not active, and we're in editMode, set active hex
     // highlight the hex and update the ui
-    let hex = getHex(x, y);
+    let hex = getHexFromXY(x, y);
     activeHex = hex;
     drawActiveHexAndUI();
   }
@@ -192,7 +192,7 @@ function handleMenuButtonOutcome(button) {
   }
 }
 
-function getHex(canvasX, canvasY) {
+function getHexFromXY(canvasX, canvasY) {
   let gotHex;
   let d = Infinity;
 
@@ -322,10 +322,10 @@ function drawButton(x, y, button) {
     case "aoi0":
       break;
     case "aoi1":
-      drawAoiObject(x, y, 1);
+      drawAoiObject(x, y, buttonRadius*2, 1);
       break;
     case "aoi2":
-      drawAoiObject(x, y, 2);
+      drawAoiObject(x, y, buttonRadius*2, 2);
       break;
     case "tri0":
       drawBiomeObject(x, y, buttonRadius, ["forest"]);
@@ -397,20 +397,20 @@ function drawButton(x, y, button) {
   }
 
   pathButtonOutline(x, y);
-  ctx.lineWidth = radius/10;
+  ctx.lineWidth = buttonRadius/5;
 }
 
 function emojiFontStyle() {
   ctx.fillStyle = 'black';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  let fontsize = radius * 0.6;
+  let fontsize = buttonRadius * 1.2;
   ctx.font = fontsize+"px Noto Emoji";
 }
 
 function pathButtonOutline(x, y) {
   ctx.beginPath();
-  ctx.arc(x, y, radius/2, 0, 2 * Math.PI, false);
+  ctx.arc(x, y, buttonRadius, 0, 2 * Math.PI, false);
   ctx.closePath();
 }
 
