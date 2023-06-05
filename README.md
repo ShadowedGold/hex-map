@@ -2,7 +2,6 @@
 A hex map experiment
 
 ### To do list:
-- Minimizable top menu that has controls like global fog of war, edit mode toggle
 - Import and export a json:
   - with the hex data
   - add ui to the top menu

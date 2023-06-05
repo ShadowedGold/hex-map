@@ -13,9 +13,9 @@ function getCursorPosition(canvas, event) {
       drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
       drawHexUI(activeHex[2], activeHex[3]);
     }
-  } else if (activeHex != undefined) {
+  } else if (editMode && activeHex != undefined) {
     // no top menu ui button hit...
-    // a hex is active, look at hex ui buttons
+    // a hex is active, and we're in edit mode, look at hex ui buttons
     button = getButton(x, y, hexUICoords);
     if (button != undefined) {
       // if hex ui button hit...
@@ -40,8 +40,8 @@ function getCursorPosition(canvas, event) {
       activeHex = undefined;
       activeHexUI = undefined;
     }
-  } else {
-    // a hex is not active, set active hex
+  } else if (editMode) {
+    // a hex is not active, and we're in editMode, set active hex
     // highlight the hex and update the ui
     let hex = getHex(x, y);
     activeHex = hex;
@@ -179,6 +179,10 @@ function handleMenuButtonOutcome(button) {
       break;
     case "pencil":
       editMode = !editMode;
+      if (!editMode) {
+        activeHex = undefined;
+        activeHexUI = undefined;
+      }
       break;
     default:
       menuOpen = !menuOpen;
