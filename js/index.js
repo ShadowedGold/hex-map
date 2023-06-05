@@ -4,6 +4,9 @@ var ignoreFog = false;
 var editMode = true;
 var mapHexOffset = [2,2];
 
+// mouse tracking for drag
+var mouseDownPos;
+
 // canvas setup
 var canvas = document.createElement('canvas');
 
@@ -11,8 +14,11 @@ canvas.id = "hexCanvas";
 canvas.width = window.innerWidth - 12;
 canvas.height = window.innerHeight - 12;
 canvas.addEventListener('mousedown', function(e) {
+  mouseDownPos = getCursorPosition(canvas, e);
+});
+canvas.addEventListener('mouseup', function(e) {
   mousePos = getCursorPosition(canvas, e);
-  handleMouseDown(mousePos.x, mousePos.y);
+  handleMouseUp(mousePos.x, mousePos.y);
 });
 
 document.body.appendChild(canvas);
