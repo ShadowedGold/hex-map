@@ -17,7 +17,7 @@ function getCursorPosition(canvas, event) {
       } else {
         handleButtonOutcome(getActiveUIList()[button[0]]);
         drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
-        drawUI(activeHex[2], activeHex[3]);
+        drawHexUI(activeHex[2], activeHex[3]);
       }
     } else {
       // if no button hit...
@@ -30,7 +30,7 @@ function getCursorPosition(canvas, event) {
     var hex = getHex(x, y);
     activeHex = hex;
     drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
-    drawUI(hex[2], hex[3]);
+    drawHexUI(hex[2], hex[3]);
   }
 }
 
@@ -173,7 +173,7 @@ function getHex(canvasX, canvasY) {
 function getButton(canvasX, canvasY) {
   let gotButton = undefined;
 
-  uiCoords.forEach(button => {
+  hexUICoords.forEach(button => {
     let a = Math.abs(button[1] - canvasX);
     let b = Math.abs(button[2] - canvasY);
     let h = Math.sqrt((a*a)+(b*b));
@@ -227,8 +227,8 @@ function getActiveUIList() {
   }
 }
 
-function drawUI(x, y) {
-  uiCoords = [];
+function drawHexUI(x, y) {
+  hexUICoords = [];
   let uiList = getActiveUIList();
 
   let buttonAngle = 2 * Math.PI / uiList.length;
@@ -247,7 +247,7 @@ function drawUI(x, y) {
     ctx.strokeStyle = getButtonStateColour(button);
     ctx.stroke();
 
-    uiCoords.push([i, xx, yy]);
+    hexUICoords.push([i, xx, yy]);
   });
 }
 
@@ -448,3 +448,5 @@ function getButtonStateColour(button) {
 
   return colour;
 }
+
+//🔽◀️✏️

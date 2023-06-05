@@ -7,7 +7,7 @@ var radius = 25 * zoom;
 var buttonRadius = radius / 2;
 
 var mapHexOffset = [2,2];
-var ignoreFog = true;
+var ignoreFog = false;
 
 var canvas = document.createElement('canvas');
 
@@ -24,7 +24,8 @@ var ctx = canvas.getContext('2d');
 var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
-var uiCoords = [];
+var hexUICoords = [];
+var menuUICoords = [];
 var activeHex = undefined;
 var activeUI = undefined;
 var activeTri = undefined;

@@ -1,5 +1,5 @@
 var mapDetails = {
-  x0y0: {
+  'x0y0': {
     roads: {
       value: [1,3],
       known: true
@@ -20,7 +20,7 @@ var mapDetails = {
       known: true
     }
   },
-  x0y1: {
+  'x0y1': {
     roads: {
       value: [0,2],
       known: true
@@ -41,7 +41,7 @@ var mapDetails = {
       known: true
     }
   },
-  x0y2: {
+  'x0y2': {
     roads: {
       value: [],
       known: true
@@ -62,7 +62,7 @@ var mapDetails = {
       known: true
     }
   },
-  x1y0: {
+  'x1y0': {
     roads: {
       value: [],
       known: true
@@ -83,7 +83,7 @@ var mapDetails = {
       known: true
     }
   },
-  x1y1: {
+  'x1y1': {
     roads: {
       value: [2,5],
       known: true
@@ -104,7 +104,7 @@ var mapDetails = {
       known: true
     }
   },
-  x1y2: {
+  'x1y2': {
     roads: {
       value: [],
       known: false
@@ -125,7 +125,7 @@ var mapDetails = {
       known: false
     }
   },
-  x2y1: {
+  'x2y1': {
     roads: {
       value: [],
       known: true
@@ -146,7 +146,7 @@ var mapDetails = {
       known: true
     }
   },
-  x2y2: {
+  'x2y2': {
     roads: {
       value: [2,5],
       known: true
@@ -167,7 +167,7 @@ var mapDetails = {
       known: false
     }
   },
-  x3y2: {
+  'x3y2': {
     roads: {
       value: [2,5],
       known: true
@@ -188,7 +188,7 @@ var mapDetails = {
       known: false
     }
   },
-  x4y2: {
+  'x4y2': {
     roads: {
       value: [],
       known: false
@@ -209,7 +209,7 @@ var mapDetails = {
       known: false
     }
   },
-  x4y3: {
+  'x4y3': {
     roads: {
       value: [2,5],
       known: true
@@ -230,7 +230,7 @@ var mapDetails = {
       known: false
     }
   },
-  x5y3: {
+  'x5y3': {
     roads: {
       value: [2,5],
       known: true
@@ -251,7 +251,7 @@ var mapDetails = {
       known: false
     }
   },
-  x10y5: {
+  'x10y5': {
     roads: {
       value: [1,3],
       known: false
