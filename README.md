@@ -5,7 +5,7 @@ A hex map experiment
 - Minimizable top menu that has controls like global fog of war, edit mode toggle
 - Import and export a json:
   - with the hex data
-  - add ui to to top menu
+  - add ui to the top menu
   - including zoom, pan, global fog settings?
 - Drag to pan functionality
 - Zoom on scroll
