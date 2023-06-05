@@ -34,6 +34,7 @@ var activeHex = undefined;
 var activeHexUI = undefined;
 var activeTri = undefined;
 var menuOpen = false;
+var fogTransparency = 0.50;
 
 // initialisation
 drawGrid();
@@ -60,13 +61,16 @@ function drawHex(x, y, num, colour, highlight) {
   ctx.stroke();
   ctx.fillStyle = colour;
   ctx.fill();
-  ctx.fillStyle = 'silver';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  let fontsize = radius * 0.4;
-  ctx.font = fontsize+"px sans-serif";
-  ctx.fillText("["+num+"]", x, y);
 
+  if (!biomeVisible(num)) {
+    ctx.fillStyle = 'silver';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    let fontsize = radius * 0.4;
+    ctx.font = fontsize+"px sans-serif";
+    ctx.fillText("["+num+"]", x, y);
+  }
+  
   drawBiome(x, y, num);
   drawRoad(x, y, num);
   drawAoi(x, y, num);
@@ -140,13 +144,26 @@ function getHexName(num) {
   return 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
 }
 
+function biomeVisible(num) {
+  let hexName = getHexName(num);
+  if ((mapDetails.hasOwnProperty(hexName) &&
+       !mapDetails[hexName]['biomes']['known'] &&
+       ignoreFog) ||
+      (mapDetails.hasOwnProperty(hexName) &&
+       mapDetails[hexName]['biomes']['known'])) {
+    return true;
+  } else return false;
+}
+
 function drawBiome(x, y, num) {
   let hexName = getHexName(num);
   if (mapDetails.hasOwnProperty(hexName) &&
      (mapDetails[hexName]['biomes']['known'] || ignoreFog)) {
     let biomeNodes = mapDetails[hexName]['biomes']['value'];
 
+    if (!mapDetails[hexName]['biomes']['known']) ctx.globalAlpha = fogTransparency;
     drawBiomeObject(x, y, radius, biomeNodes);
+    ctx.globalAlpha = 1;
   }
 }
 
@@ -192,8 +209,10 @@ function drawRoad(x, y, num) {
   if (mapDetails.hasOwnProperty(hexName) &&
      (mapDetails[hexName]['roads']['known'] || ignoreFog)) {
     let roadNodes = mapDetails[hexName]['roads']['value'];
-
+    
+    if (!mapDetails[hexName]['roads']['known']) ctx.globalAlpha = fogTransparency;
     drawRoadObject(x, y, radius, roadNodes);
+    ctx.globalAlpha = 1;
   }
 }
 
@@ -215,7 +234,9 @@ function drawAoi(x, y, num) {
   if (mapDetails.hasOwnProperty(hexName) &&
      (mapDetails[hexName]['aoi']['known'] || ignoreFog)) {
     if (mapDetails[hexName]['aoi']['value'] != 0) {
+      if (!mapDetails[hexName]['aoi']['known']) ctx.globalAlpha = fogTransparency;
       drawAoiObject(x, y, mapDetails[hexName]['aoi']['value']);
+      ctx.globalAlpha = 1;
     }
   }
 }

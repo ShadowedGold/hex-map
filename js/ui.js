@@ -399,10 +399,10 @@ function drawButton(x, y, button) {
 }
 
 function emojiFontStyle() {
-  let fontsize = radius * 0.6;
   ctx.fillStyle = 'black';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  let fontsize = radius * 0.6;
   ctx.font = fontsize+"px Noto Emoji";
 }
 
