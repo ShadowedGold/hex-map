@@ -7,7 +7,7 @@ A hex map experiment
   - with the hex data
   - add ui to to top menu
   - including zoom, pan, global fog settings?
-- Need to build the drag to pan functionality
+- Drag to pan functionality
 - Zoom on scroll
 - Update on window resize
 - Opacity overlay on fog
