@@ -39,6 +39,7 @@ var fogTransparency = 0.50;
 // initialisation
 drawGrid();
 drawMenuUI();
+window.onresize = handleResize;
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
@@ -52,6 +53,17 @@ function getOffsets() {
   let y = (canvas.height - ((dimensions.rows-0.5) * radius * Math.sin(angle) * 2)) / 2;
 
   return {x: x, y: y};
+}
+
+function handleResize() {
+  canvas.width = window.innerWidth - 12;
+  canvas.height = window.innerHeight - 12;
+  dimensions = getDimensions();
+  offsets = getOffsets();
+
+  drawGrid();
+  if (activeHex != undefined) drawActiveHexAndUI();
+  drawMenuUI();
 }
 
 function drawHex(x, y, num, colour, highlight) {

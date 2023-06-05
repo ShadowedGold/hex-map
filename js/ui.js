@@ -10,8 +10,7 @@ function getCursorPosition(canvas, event) {
     drawGrid();
     // if there's an active hex, draw it and its ui back in
     if (activeHex != undefined) {
-      drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
-      drawHexUI(activeHex[2], activeHex[3]);
+      drawActiveHexAndUI();
     }
   } else if (editMode && activeHex != undefined) {
     // no top menu ui button hit...
@@ -29,8 +28,7 @@ function getCursorPosition(canvas, event) {
         // button other than top level cancel button hit...
         // highlight the hex and update the ui
         handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
-        drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
-        drawHexUI(activeHex[2], activeHex[3]);
+        drawActiveHexAndUI();
       }
     } else {
       // if no hex ui button hit...
@@ -45,12 +43,16 @@ function getCursorPosition(canvas, event) {
     // highlight the hex and update the ui
     let hex = getHex(x, y);
     activeHex = hex;
-    drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
-    drawHexUI(hex[2], hex[3]);
+    drawActiveHexAndUI();
   }
 
   // update the top menu ui
   drawMenuUI();
+}
+
+function drawActiveHexAndUI() {
+  drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
+  drawHexUI(activeHex[2], activeHex[3]);
 }
 
 function handleHexButtonOutcome(button) {
