@@ -1,14 +1,9 @@
+// settings
 var zoom = 1;
-
-var shapeType = 6;
-var angle = 2 * Math.PI / shapeType;
-var angleOffset = 2 * Math.PI / 4;
-var radius = 25 * zoom;
-var buttonRadius = radius / 2;
-
-var mapHexOffset = [2,2];
 var ignoreFog = false;
+var mapHexOffset = [2,2];
 
+// canvas setup
 var canvas = document.createElement('canvas');
 
 canvas.id = "hexCanvas";
@@ -21,6 +16,14 @@ canvas.addEventListener('mousedown', function(e) {
 document.body.appendChild(canvas);
 var ctx = canvas.getContext('2d');
 
+// hex setup
+var shapeType = 6;
+var angle = 2 * Math.PI / shapeType;
+var angleOffset = 2 * Math.PI / 4;
+var radius = 25 * zoom;
+var buttonRadius = radius / 2;
+
+// supporting vars to draw and track state for grid and ui
 var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
@@ -30,6 +33,7 @@ var activeHex = undefined;
 var activeUI = undefined;
 var activeTri = undefined;
 
+// initialisation
 drawGrid();
 
 function getDimensions() {
