@@ -3,56 +3,75 @@ function getCursorPosition(canvas, event) {
   const x = event.clientX - rect.left - 1;
   const y = event.clientY - rect.top - 1;
 
-  if (activeHex != undefined) {
-    // a hex is active, look at buttons
-    var button = getButton(x, y);
+  let button = getButton(x, y, menuUICoords);
+  if (button != undefined) {
+    // if top menu ui button hit...
+    handleMenuButtonOutcome(getActiveMenuUIList()[button[0]]);
+    drawGrid();
+    // if there's an active hex, draw it and its ui back in
+    if (activeHex != undefined) {
+      drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
+      drawHexUI(activeHex[2], activeHex[3]);
+    }
+  } else if (activeHex != undefined) {
+    // no top menu ui button hit...
+    // a hex is active, look at hex ui buttons
+    button = getButton(x, y, hexUICoords);
     if (button != undefined) {
-      // if button hit...
-      updateHexAndSurrounds(activeHex, true);
-      if (button[0] == 0 && activeUI == undefined) {
-        // if cancel button hit...
-        // if top level of UI...
+      // if hex ui button hit...
+      // refresh the grid
+      drawGrid();
+      if (button[0] == 0 && activeHexUI == undefined) {
+        // if top level cancel button hit...
         // hex no longer active
         activeHex = undefined;
       } else {
-        handleButtonOutcome(getActiveUIList()[button[0]]);
+        // button other than top level cancel button hit...
+        // highlight the hex and update the ui
+        handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
         drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
         drawHexUI(activeHex[2], activeHex[3]);
       }
     } else {
-      // if no button hit...
-      updateHexAndSurrounds(activeHex, true);
+      // if no hex ui button hit...
+      // refresh the grid
+      // hex and hex ui no longer active
+      drawGrid();
       activeHex = undefined;
-      activeUI = undefined;
+      activeHexUI = undefined;
     }
   } else {
     // a hex is not active, set active hex
-    var hex = getHex(x, y);
+    // highlight the hex and update the ui
+    let hex = getHex(x, y);
     activeHex = hex;
     drawHex(hex[2], hex[3], [hex[0], hex[1]], getHexBgColour(hex[0], hex[1]), "yellow");
     drawHexUI(hex[2], hex[3]);
   }
+
+  // update the top menu ui
+  drawMenuUI();
 }
 
-function handleButtonOutcome(button) {
-  switch (activeUI) {
+function handleHexButtonOutcome(button) {
+  switch (activeHexUI) {
     case undefined:
       // first level of ui
       switch (button) {
         case "eye":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
-          activeUI = "eye";
+          activeHexUI = "eye";
           break;
         case "biomes":
-          activeUI = "biomes";
+          activeHexUI = "biomes";
           break;
         case "roads":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
-          activeUI = "roads";
+          activeHexUI = "roads";
           break;
         case "aoi1":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
-          activeUI = "aoi";
+          activeHexUI = "aoi";
           break;
       }
       break;
@@ -60,7 +79,7 @@ function handleButtonOutcome(button) {
       // toggle visibility ui
       switch (button) {
         case "cancel":
-          activeUI = undefined;
+          activeHexUI = undefined;
           break;
         case "biomes":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
@@ -80,13 +99,13 @@ function handleButtonOutcome(button) {
       // alter biomes
       switch (button) {
         case "cancel":
-          activeUI = undefined;
+          activeHexUI = undefined;
           break;
         case "hex":
-          activeUI = "hexColours";
+          activeHexUI = "hexColours";
           break;
         case "tri0":
-          activeUI = "tri";
+          activeHexUI = "tri";
           break;
       }
       break;
@@ -94,10 +113,10 @@ function handleButtonOutcome(button) {
       // alter tri
       switch (button) {
         case "cancel":
-          activeUI = "biomes";
+          activeHexUI = "biomes";
           break;
         default:
-          activeUI = "triColours";
+          activeHexUI = "triColours";
           activeTri = Number(button.substring(3));
           break;
       }
@@ -106,7 +125,7 @@ function handleButtonOutcome(button) {
       // alter hex biome colour
       switch (button) {
         case "cancel":
-          activeUI = "biomes";
+          activeHexUI = "biomes";
           break;
         default:
           prepHexForUpdate([activeHex[0], activeHex[1]]);
@@ -118,7 +137,7 @@ function handleButtonOutcome(button) {
       // alter tri biome colour
       switch (button) {
         case "cancel":
-          activeUI = "tri";
+          activeHexUI = "tri";
           break;
         default:
           prepHexForUpdate([activeHex[0], activeHex[1]]);
@@ -130,7 +149,7 @@ function handleButtonOutcome(button) {
       // toggle roads
       switch (button) {
         case "cancel":
-          activeUI = undefined;
+          activeHexUI = undefined;
           break;
         default:
           prepHexForUpdate([activeHex[0], activeHex[1]]);
@@ -142,13 +161,27 @@ function handleButtonOutcome(button) {
       // toggle aoi
       switch (button) {
         case "cancel":
-          activeUI = undefined;
+          activeHexUI = undefined;
           break;
         default:
           prepHexForUpdate([activeHex[0], activeHex[1]]);
           updateAoi(Number(button.substring(3)));
           break;
       }
+      break;
+  }
+}
+
+function handleMenuButtonOutcome(button) {
+  switch (button) {
+    case "eye":
+      ignoreFog = !ignoreFog;
+      break;
+    case "pencil":
+      editMode = !editMode;
+      break;
+    default:
+      menuOpen = !menuOpen;
       break;
   }
 }
@@ -170,10 +203,10 @@ function getHex(canvasX, canvasY) {
   return gotHex;
 }
 
-function getButton(canvasX, canvasY) {
+function getButton(canvasX, canvasY, uiCoords) {
   let gotButton = undefined;
 
-  hexUICoords.forEach(button => {
+  uiCoords.forEach(button => {
     let a = Math.abs(button[1] - canvasX);
     let b = Math.abs(button[2] - canvasY);
     let h = Math.sqrt((a*a)+(b*b));
@@ -182,6 +215,7 @@ function getButton(canvasX, canvasY) {
   return gotButton;
 }
 
+/*
 function updateHexAndSurrounds(hex, expanded) {
   let updateHexes = getSurroundingHexes(hex[0], hex[1], expanded);
   updateHexes.push([hex[0], hex[1]]);
@@ -197,9 +231,10 @@ function updateHexAndSurrounds(hex, expanded) {
     drawHex(hexDetails[2], hexDetails[3], [hexDetails[0], hexDetails[1]], getHexBgColour(hexDetails[0], hexDetails[1]));
   });
 }
+*/
 
-function getActiveUIList() {
-  switch (activeUI) {
+function getActiveHexUIList() {
+  switch (activeHexUI) {
     case undefined:
       // first level of ui
       return ["cancel", "eye", "biomes", "roads", "aoi1"];
@@ -227,9 +262,13 @@ function getActiveUIList() {
   }
 }
 
+function getActiveMenuUIList() {
+  return (menuOpen) ? ["cancel", "eye", "pencil"] : ["closed"];
+}
+
 function drawHexUI(x, y) {
   hexUICoords = [];
-  let uiList = getActiveUIList();
+  let uiList = getActiveHexUIList();
 
   let buttonAngle = 2 * Math.PI / uiList.length;
   let buttonRingRadius = radius * 2;
@@ -238,13 +277,8 @@ function drawHexUI(x, y) {
     let xx = x + buttonRingRadius * Math.cos((buttonAngle * i) - angleOffset) * Math.sqrt(3)/2;
     let yy = y + buttonRingRadius * Math.sin((buttonAngle * i) - angleOffset) * Math.sqrt(3)/2;
 
-    pathButtonOutline(xx, yy);
-    ctx.fillStyle = 'white';
-    ctx.fill();
     drawButton(xx, yy, button);
-    pathButtonOutline(xx, yy);
-    ctx.lineWidth = radius/10;
-    ctx.strokeStyle = getButtonStateColour(button);
+    ctx.strokeStyle = getHexButtonStateColour(button);
     ctx.stroke();
 
     hexUICoords.push([i, xx, yy]);
@@ -252,6 +286,10 @@ function drawHexUI(x, y) {
 }
 
 function drawButton(x, y, button) {
+  pathButtonOutline(x, y);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+
   switch (button) {
     case "cancel":
       emojiFontStyle();
@@ -260,6 +298,14 @@ function drawButton(x, y, button) {
     case "eye":
       emojiFontStyle();
       ctx.fillText("👁️", x, y);
+      break;
+    case "pencil":
+      emojiFontStyle();
+      ctx.fillText("✏️", x, y);
+      break;
+    case "closed":
+      emojiFontStyle();
+      ctx.fillText("⚙️", x, y);
       break;
     case "biomes":
       drawBiomeObject(x, y, buttonRadius, ["forest", "plains", "plains", "plains", "water", "forest"]);
@@ -343,6 +389,9 @@ function drawButton(x, y, button) {
       drawRoadObject(x, y, buttonRadius, [5]);
       break;
   }
+
+  pathButtonOutline(x, y);
+  ctx.lineWidth = radius/10;
 }
 
 function emojiFontStyle() {
@@ -395,11 +444,11 @@ function toggleVisibility(feature) {
   mapDetails[hexName][feature]['known'] = !mapDetails[hexName][feature]['known'];
 }
 
-function getButtonStateColour(button) {
+function getHexButtonStateColour(button) {
   let hexName = getHexName([activeHex[0], activeHex[1]]);
   let colour = 'grey';
 
-  switch (activeUI) {
+  switch (activeHexUI) {
     case "eye":
       // toggle visibility ui
       switch (button) {
@@ -449,4 +498,33 @@ function getButtonStateColour(button) {
   return colour;
 }
 
-//🔽◀️✏️
+function getMenuButtonStateColour(button) {
+  let colour = 'grey';
+
+  switch (button) {
+    case "eye":
+      if (ignoreFog) colour = 'yellow';
+      break;
+    case "pencil":
+      if (editMode) colour = 'yellow';
+      break;
+  }
+
+  return colour;
+}
+
+function drawMenuUI() {
+  menuUICoords = [];
+  let uiList = getActiveMenuUIList();
+
+  uiList.forEach((button, i) => {
+    let x = canvas.width - (buttonRadius * 2.5* i) - (buttonRadius * 2);
+    let y = buttonRadius * 2;
+
+    drawButton(x, y, button);
+    ctx.strokeStyle = getMenuButtonStateColour(button);
+    ctx.stroke();
+
+    menuUICoords.push([i, x, y]);
+  });
+}

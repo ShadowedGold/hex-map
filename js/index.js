@@ -1,6 +1,7 @@
 // settings
 var zoom = 1;
 var ignoreFog = false;
+var editMode = true;
 var mapHexOffset = [2,2];
 
 // canvas setup
@@ -30,11 +31,13 @@ var hexCoords = [];
 var hexUICoords = [];
 var menuUICoords = [];
 var activeHex = undefined;
-var activeUI = undefined;
+var activeHexUI = undefined;
 var activeTri = undefined;
+var menuOpen = false;
 
 // initialisation
 drawGrid();
+drawMenuUI();
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
