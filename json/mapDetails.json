@@ -182,8 +182,8 @@
   "x3y2": {
     "roads": {
       "value": [
-        2,
-        5
+        5,
+        3
       ],
       "known": true
     },
@@ -191,7 +191,7 @@
       "value": [
         "plains",
         "mountain",
-        "plains",
+        "mountain",
         "plains",
         "plains",
         "plains"
@@ -228,9 +228,9 @@
     "roads": {
       "value": [
         2,
-        5
+        4
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -254,7 +254,7 @@
         2,
         5
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -404,7 +404,10 @@
   },
   "x3y3": {
     "roads": {
-      "value": [],
+      "value": [
+        0,
+        1
+      ],
       "known": false
     },
     "biomes": {
@@ -933,7 +936,7 @@
         5,
         2
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -957,7 +960,7 @@
         5,
         2
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -981,7 +984,7 @@
         5,
         1
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -1005,7 +1008,7 @@
         4,
         2
       ],
-      "known": true
+      "known": false
     },
     "biomes": {
       "value": [
@@ -1236,6 +1239,561 @@
   "x7y0": {
     "roads": {
       "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x8y3": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x8y0": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x8y2": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x8y1": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x9y0": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x9y1": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x9y2": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x9y3": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y0": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y1": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y2": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "forest",
+        "forest",
+        "forest",
+        "forest",
+        "plains",
+        "forest"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y3": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y4": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x10y6": {
+    "roads": {
+      "value": [
+        0,
+        2
+      ],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "water",
+        "water",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y0": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y1": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "forest",
+        "forest",
+        "forest",
+        "forest",
+        "forest"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y2": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "forest",
+        "forest",
+        "forest",
+        "forest",
+        "forest",
+        "forest"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y3": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "forest",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y4": {
+    "roads": {
+      "value": [
+        1,
+        4
+      ],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y5": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains",
+        "plains"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x1y6": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "water",
+        "water",
+        "water",
+        "water",
+        "water",
+        "water"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x3y6": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "water",
+        "water",
+        "water",
+        "water",
+        "water",
+        "water"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x5y6": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "water",
+        "water",
+        "water",
+        "water",
+        "water",
+        "water"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x7y6": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "water",
+        "water",
+        "water",
+        "water",
+        "water",
+        "water"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x9y6": {
+    "roads": {
+      "value": [],
+      "known": false
+    },
+    "biomes": {
+      "value": [
+        "water",
+        "water",
+        "water",
+        "water",
+        "water",
+        "water"
+      ],
+      "known": false
+    },
+    "aoi": {
+      "value": 0,
+      "known": false
+    }
+  },
+  "x11y6": {
+    "roads": {
+      "value": [
+        5,
+        3
+      ],
       "known": false
     },
     "biomes": {
