@@ -367,36 +367,36 @@ function updateHexBiome(biome) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
   for (let i = 0; i < shapeType; i++) {
-    mapDetails[hexName]['biomes']['value'][i] = biome;
+    mapDetails.data[hexName]['biomes']['value'][i] = biome;
   }
 }
 
 function updateTriBiome(biome) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
-  mapDetails[hexName]['biomes']['value'][activeTri] = biome;
+  mapDetails.data[hexName]['biomes']['value'][activeTri] = biome;
 }
 
 function updateRoads(road) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
-  if (mapDetails[hexName]['roads']['value'].includes(road)) {
-    mapDetails[hexName]['roads']['value'].splice(mapDetails[hexName]['roads']['value'].indexOf(road),1);
+  if (mapDetails.data[hexName]['roads']['value'].includes(road)) {
+    mapDetails.data[hexName]['roads']['value'].splice(mapDetails.data[hexName]['roads']['value'].indexOf(road),1);
   } else {
-    mapDetails[hexName]['roads']['value'].push(road);
+    mapDetails.data[hexName]['roads']['value'].push(road);
   }
 }
 
 function updateAoi(aoi) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
-  mapDetails[hexName]['aoi']['value'] = aoi;
+  mapDetails.data[hexName]['aoi']['value'] = aoi;
 }
 
 function toggleVisibility(feature) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
-  mapDetails[hexName][feature]['known'] = !mapDetails[hexName][feature]['known'];
+  mapDetails.data[hexName][feature]['known'] = !mapDetails.data[hexName][feature]['known'];
 }
 
 function getHexButtonStateColour(button) {
@@ -408,13 +408,13 @@ function getHexButtonStateColour(button) {
       // toggle visibility ui
       switch (button) {
         case "biomes":
-          if (mapDetails[hexName]['biomes']['known']) colour = 'yellow';
+          if (mapDetails.data[hexName]['biomes']['known']) colour = 'yellow';
           break;
         case "roads":
-          if (mapDetails[hexName]['roads']['known']) colour = 'yellow';
+          if (mapDetails.data[hexName]['roads']['known']) colour = 'yellow';
           break;
         case "aoi1":
-          if (mapDetails[hexName]['aoi']['known']) colour = 'yellow';
+          if (mapDetails.data[hexName]['aoi']['known']) colour = 'yellow';
           break;
       }
       break;
@@ -424,7 +424,7 @@ function getHexButtonStateColour(button) {
         case "cancel":
           break;
         default:
-          if (mapDetails[hexName]['biomes']['value'][activeTri] == button) colour = 'yellow';
+          if (mapDetails.data[hexName]['biomes']['value'][activeTri] == button) colour = 'yellow';
           break;
       }
       break;
@@ -434,7 +434,7 @@ function getHexButtonStateColour(button) {
         case "cancel":
           break;
         default:
-          if (mapDetails[hexName]['roads']['value'].includes(Number(button.substring(4)))) colour = 'yellow';
+          if (mapDetails.data[hexName]['roads']['value'].includes(Number(button.substring(4)))) colour = 'yellow';
           break;
       }
       break;
@@ -444,7 +444,7 @@ function getHexButtonStateColour(button) {
         case "cancel":
           break;
         default:
-          if (mapDetails[hexName]['aoi']['value'] == Number(button.substring(3))) colour = 'yellow';
+          if (mapDetails.data[hexName]['aoi']['value'] == Number(button.substring(3))) colour = 'yellow';
           break;
       }
       break;

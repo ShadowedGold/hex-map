@@ -1,9 +1,3 @@
-// settings
-var zoom = 1;
-var ignoreFog = false;
-var editMode = true;
-var mapHexOffset = [2,2];
-
 // mouse tracking for drag
 var mouseDownPos;
 
@@ -44,6 +38,7 @@ var menuOpen = false;
 var fogTransparency = 0.50;
 
 // initialisation
+loadMapDetails();
 drawGrid();
 drawMenuUI();
 window.onresize = handleResize;
@@ -184,22 +179,22 @@ function getHexName(num) {
 
 function biomeVisible(num) {
   let hexName = getHexName(num);
-  if ((mapDetails.hasOwnProperty(hexName) &&
-       !mapDetails[hexName]['biomes']['known'] &&
+  if ((mapDetails.data.hasOwnProperty(hexName) &&
+       !mapDetails.data[hexName]['biomes']['known'] &&
        ignoreFog) ||
-      (mapDetails.hasOwnProperty(hexName) &&
-       mapDetails[hexName]['biomes']['known'])) {
+      (mapDetails.data.hasOwnProperty(hexName) &&
+       mapDetails.data[hexName]['biomes']['known'])) {
     return true;
   } else return false;
 }
 
 function drawBiome(x, y, num) {
   let hexName = getHexName(num);
-  if (mapDetails.hasOwnProperty(hexName) &&
-     (mapDetails[hexName]['biomes']['known'] || ignoreFog)) {
-    let biomeNodes = mapDetails[hexName]['biomes']['value'];
+  if (mapDetails.data.hasOwnProperty(hexName) &&
+     (mapDetails.data[hexName]['biomes']['known'] || ignoreFog)) {
+    let biomeNodes = mapDetails.data[hexName]['biomes']['value'];
 
-    if (!mapDetails[hexName]['biomes']['known']) ctx.globalAlpha = fogTransparency;
+    if (!mapDetails.data[hexName]['biomes']['known']) ctx.globalAlpha = fogTransparency;
     drawBiomeObject(x, y, radius, biomeNodes);
     ctx.globalAlpha = 1;
   }
@@ -244,11 +239,11 @@ function getBiomeColour(biome) {
 
 function drawRoad(x, y, num) {
   let hexName = getHexName(num);
-  if (mapDetails.hasOwnProperty(hexName) &&
-     (mapDetails[hexName]['roads']['known'] || ignoreFog)) {
-    let roadNodes = mapDetails[hexName]['roads']['value'];
+  if (mapDetails.data.hasOwnProperty(hexName) &&
+     (mapDetails.data[hexName]['roads']['known'] || ignoreFog)) {
+    let roadNodes = mapDetails.data[hexName]['roads']['value'];
     
-    if (!mapDetails[hexName]['roads']['known']) ctx.globalAlpha = fogTransparency;
+    if (!mapDetails.data[hexName]['roads']['known']) ctx.globalAlpha = fogTransparency;
     drawRoadObject(x, y, radius, roadNodes);
     ctx.globalAlpha = 1;
   }
@@ -269,11 +264,11 @@ function drawRoadObject(x, y, r, roadNodes) {
 
 function drawAoi(x, y, num) {
   let hexName = getHexName(num);
-  if (mapDetails.hasOwnProperty(hexName) &&
-     (mapDetails[hexName]['aoi']['known'] || ignoreFog)) {
-    if (mapDetails[hexName]['aoi']['value'] != 0) {
-      if (!mapDetails[hexName]['aoi']['known']) ctx.globalAlpha = fogTransparency;
-      drawAoiObject(x, y, radius, mapDetails[hexName]['aoi']['value']);
+  if (mapDetails.data.hasOwnProperty(hexName) &&
+     (mapDetails.data[hexName]['aoi']['known'] || ignoreFog)) {
+    if (mapDetails.data[hexName]['aoi']['value'] != 0) {
+      if (!mapDetails.data[hexName]['aoi']['known']) ctx.globalAlpha = fogTransparency;
+      drawAoiObject(x, y, radius, mapDetails.data[hexName]['aoi']['value']);
       ctx.globalAlpha = 1;
     }
   }
