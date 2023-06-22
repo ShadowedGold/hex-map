@@ -2,10 +2,10 @@
 function handleResize() {
   canvas.width = window.innerWidth - 12;
   canvas.height = window.innerHeight - 12;
-  dimensions = getDimensions();
-  offsets = getOffsets();
 
-  redrawAll();
+  updateGridPositions();
+
+  redrawAll(true);
 }
 
 function handleWheel(event) {
@@ -18,36 +18,7 @@ function handleWheel(event) {
     zoom = newZoom;
     radius = 25 * zoom;
 
-    if (activeHex != undefined) {
-      var percentX = activeHex[0] / dimensions.cols;
-      var percentY = activeHex[1] / dimensions.rows;
-    }
-
-    dimensions = getDimensions();
-    offsets = getOffsets();
-
-    if (activeHex != undefined) {
-      let newX = Math.round(dimensions.cols * percentX);
-      let newY = Math.round(dimensions.rows * percentY);
-
-      if (newX == dimensions.cols-1) newX--;
-      if (newX == 0) newX++;
-      if (newY == dimensions.rows-1) newY--;
-      if (newY == 0) newY++;
-      
-      let offsetX = activeHex[0] - newX;
-      let offsetY = activeHex[1] - newY;
-
-      if (offsetX % 2) {
-        offsetX += (Math.round(percentX)) ? 1 : -1;
-      }
-
-      mapHexOffset[0] -= offsetX;
-      mapHexOffset[1] -= offsetY;
-
-      activeHex[0] -= offsetX;
-      activeHex[1] -= offsetY;
-    }
+    updateGridPositions();
 
     // redraw at new zoom
     redrawAll(true);
@@ -70,8 +41,20 @@ function handleMouseUp(x, y) {
       let startHex = getHexFromXY(mouseDownPos.x, mouseDownPos.y);
       let endHex = getHexFromXY(x, y);
       if (startHex[0] != endHex[0] || startHex[1] != endHex[1]) {
-        dragged = [startHex[0] - endHex[0],
-                   startHex[1] - endHex[1]];
+        if ((mapHexOffset[0] % 2) && !(endHex[0] % 2)) {
+          endHex[1]++;
+          console.log("endY ++");
+        }
+
+        let difX = startHex[0] - endHex[0];
+        let difY = startHex[1] - endHex[1];
+
+        if ((mapHexOffset[0] % 2) && (endHex[0] % 2)) {
+          endHex[1]++;
+          console.log("this");
+        }
+
+        dragged = [difX, difY];
       }
     }
 
@@ -110,10 +93,6 @@ function handleDrag(x, y) {
   let offsetX = x;
   let offsetY = y;
 
-  if (offsetX % 2) {
-    offsetX += Math.sign(x) * 1;
-  }
-
   mapHexOffset[0] -= offsetX;
   mapHexOffset[1] -= offsetY;
 
@@ -132,4 +111,33 @@ function handleDrag(x, y) {
 
   // redraw at new zoom
   redrawAll(true);
+}
+
+function updateGridPositions() {
+  if (activeHex != undefined) {
+    var percentX = activeHex[0] / dimensions.cols;
+    var percentY = activeHex[1] / dimensions.rows;
+  }
+
+  dimensions = getDimensions();
+  offsets = getOffsets();
+
+  if (activeHex != undefined) {
+    let newX = Math.round(dimensions.cols * percentX);
+    let newY = Math.round(dimensions.rows * percentY);
+
+    if (newX == dimensions.cols-1) newX--;
+    if (newX == 0) newX++;
+    if (newY == dimensions.rows-1) newY--;
+    if (newY == 0) newY++;
+    
+    let offsetX = activeHex[0] - newX;
+    let offsetY = activeHex[1] - newY;
+
+    mapHexOffset[0] -= offsetX;
+    mapHexOffset[1] -= offsetY;
+
+    activeHex[0] -= offsetX;
+    activeHex[1] -= offsetY;
+  }
 }
