@@ -1,4 +1,3 @@
-
 function handleResize() {
   canvas.width = window.innerWidth - 12;
   canvas.height = window.innerHeight - 12;
@@ -41,18 +40,13 @@ function handleMouseUp(x, y) {
       let startHex = getHexFromXY(mouseDownPos.x, mouseDownPos.y);
       let endHex = getHexFromXY(x, y);
       if (startHex[0] != endHex[0] || startHex[1] != endHex[1]) {
-        if ((mapHexOffset[0] % 2) && !(endHex[0] % 2)) {
-          endHex[1]++;
-          console.log("endY ++");
+        if ((startHex[0] % 2) && !(endHex[0] % 2)) {
+          if (mapHexOffset[0] % 2) endHex[1]++;
+          else endHex[1]--;
         }
 
         let difX = startHex[0] - endHex[0];
         let difY = startHex[1] - endHex[1];
-
-        if ((mapHexOffset[0] % 2) && (endHex[0] % 2)) {
-          endHex[1]++;
-          console.log("this");
-        }
 
         dragged = [difX, difY];
       }
