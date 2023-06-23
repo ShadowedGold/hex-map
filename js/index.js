@@ -27,7 +27,7 @@ var ctx = canvas.getContext('2d');
 var shapeType = 6;
 var angle = 2 * Math.PI / shapeType;
 var angleOffset = 2 * Math.PI / 4;
-var radius = 25 * zoom * window.devicePixelRatio;
+var radius = getRadius();
 var buttonRadius = radius / 2;
 
 // supporting vars to draw and track state for grid and ui
@@ -48,6 +48,29 @@ drawGrid();
 drawMenuUI();
 window.onresize = handleResize;
 window.onwheel = handleWheel;
+
+function getRadius() {
+  return 25 * zoom * window.devicePixelRatio * mobileMultiplier();
+}
+
+function mobileMultiplier() {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+    /Mobile/i
+  ];
+
+  const isMobile = toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+
+  return (isMobile) ? 1.25 : 1;
+}
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;

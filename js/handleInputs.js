@@ -15,7 +15,7 @@ function handleWheel(e) {
 
   if (newZoom != zoom) {
     zoom = newZoom;
-    radius = 25 * zoom * window.devicePixelRatio;
+    radius = getRadius();
 
     updateGridPositions();
 
