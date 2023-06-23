@@ -3,12 +3,17 @@ var startInputPos;
 var endInputPos;
 var dragging = false;
 
+// viewport setup
+var padding = 5;
+setUpViewport();
+
 // canvas setup
 var canvas = document.createElement('canvas');
 
 canvas.id = "hexCanvas";
-canvas.width = window.innerWidth - 12;
-canvas.height = window.innerHeight - 12;
+canvas.style.borderWidth = window.devicePixelRatio+"px";
+canvas.width = window.innerWidth - ((padding + 1) * 2 * window.devicePixelRatio);
+canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
 canvas.addEventListener('mousedown', handleInputPosition);
 canvas.addEventListener('touchstart', handleInputPosition);
 canvas.addEventListener('touchmove', handleInputPosition);
@@ -22,7 +27,7 @@ var ctx = canvas.getContext('2d');
 var shapeType = 6;
 var angle = 2 * Math.PI / shapeType;
 var angleOffset = 2 * Math.PI / 4;
-var radius = 25 * window.devicePixelRatio * zoom;
+var radius = 25 * zoom * window.devicePixelRatio;
 var buttonRadius = radius / 2;
 
 // supporting vars to draw and track state for grid and ui
@@ -56,6 +61,16 @@ function getOffsets() {
   let y = (canvas.height - ((dimensions.rows-0.5) * radius * Math.sin(angle) * 2)) / 2;
 
   return {x: x, y: y};
+}
+
+function setUpViewport() {
+  let scale = 1 / window.devicePixelRatio;
+  let viewport = document.createElement('meta');
+  viewport.name = "viewport";
+  viewport.content = "width=device-width, minimum-scale="+scale+", maximum-scale="+scale;
+  document.getElementsByTagName('head')[0].appendChild(viewport);
+
+  document.getElementsByTagName('body')[0].style.padding = (padding * window.devicePixelRatio)+"px";
 }
 
 function updateActiveHexXY() {
@@ -247,7 +262,7 @@ function drawRoadObject(x, y, r, roadNodes) {
     let xx = x + r * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     let yy = y + r * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     ctx.lineTo(xx, yy);
-    ctx.lineWidth = radius/10;
+    ctx.lineWidth = (r == radius) ? radius/10 : buttonRadius*2/10;
     ctx.strokeStyle = 'sienna';
     ctx.stroke();
   }

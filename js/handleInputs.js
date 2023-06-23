@@ -1,6 +1,6 @@
 function handleResize() {
-  canvas.width = window.innerWidth - 12;
-  canvas.height = window.innerHeight - 12;
+  canvas.width = window.innerWidth - ((padding + 1) * 2 * window.devicePixelRatio);
+  canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
 
   updateGridPositions();
 
@@ -15,7 +15,7 @@ function handleWheel(e) {
 
   if (newZoom != zoom) {
     zoom = newZoom;
-    radius = 25 * window.devicePixelRatio * zoom;
+    radius = 25 * zoom * window.devicePixelRatio;
 
     updateGridPositions();
 
@@ -153,8 +153,8 @@ function handleInputPosition(e) {
   if (e.type == "touchmove") dragging = true;
 
   const rect = canvas.getBoundingClientRect();
-  ePos.x -= rect.left - 1;
-  ePos.y -= rect.top - 1;
+  ePos.x -= rect.left - window.devicePixelRatio;
+  ePos.y -= rect.top - window.devicePixelRatio;
 
   if (e.type == "mousedown" || e.type == "touchstart") {
     startInputPos = {x: ePos.x, y: ePos.y};
