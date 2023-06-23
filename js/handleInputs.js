@@ -7,8 +7,8 @@ function handleResize() {
   redrawAll(true);
 }
 
-function handleWheel(event) {
-  let newZoom = zoom + event.deltaY * -0.0025;
+function handleWheel(e) {
+  let newZoom = zoom + e.deltaY * -0.0025;
 
   // Restrict zoom level
   newZoom = Math.min(Math.max(0.75, newZoom), 2.25);
@@ -24,7 +24,7 @@ function handleWheel(event) {
   }
 }
 
-function handleMouseUp(x, y) {
+function handleRelease(x, y) {
   let button = getButton(x, y, menuUICoords);
   if (button != undefined) {
     // if top menu ui button hit...
@@ -35,9 +35,9 @@ function handleMouseUp(x, y) {
 
     // check for drag
     let dragged = undefined;
-    if (mouseDownPos.x != x || mouseDownPos.y != y) {
+    if (startInputPos.x != x || startInputPos.y != y) {
       // if mouse pos diff was over 1 hex...
-      let startHex = getHexFromXY(mouseDownPos.x, mouseDownPos.y);
+      let startHex = getHexFromXY(startInputPos.x, startInputPos.y);
       let endHex = getHexFromXY(x, y);
       if (startHex[0] != endHex[0] || startHex[1] != endHex[1]) {
         if ((startHex[0] % 2) && !(endHex[0] % 2)) {
@@ -133,5 +133,30 @@ function updateGridPositions() {
 
     activeHex[0] -= offsetX;
     activeHex[1] -= offsetY;
+  }
+}
+
+function handleInputPosition(e) {
+  let ePos = {
+    x: 0,
+    y: 0
+  };
+
+  if (e.type == "mouseup" || e.type == "mousedown") {
+    ePos.x = e.clientX;
+    ePos.y = e.clientY;
+  } else {
+    ePos.x = e.touches[0].clientX;
+    ePos.y = e.touches[0].clientY;
+  }
+
+  const rect = canvas.getBoundingClientRect();
+  ePos.x -= rect.left - 1;
+  ePos.y -= rect.top - 1;
+
+  if (e.type == "mousedown" || e.type == "touchstart") {
+    startInputPos = {x: ePos.x, y: ePos.y};
+  } else {
+    handleRelease(ePos.x, ePos.y);
   }
 }
