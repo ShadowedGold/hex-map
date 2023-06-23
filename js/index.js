@@ -1,5 +1,5 @@
 // mouse tracking for drag
-var mouseDownPos;
+var startInputPos;
 
 // canvas setup
 var canvas = document.createElement('canvas');
@@ -7,13 +7,10 @@ var canvas = document.createElement('canvas');
 canvas.id = "hexCanvas";
 canvas.width = window.innerWidth - 12;
 canvas.height = window.innerHeight - 12;
-canvas.addEventListener('mousedown', function(e) {
-  mouseDownPos = getCursorPosition(canvas, e);
-});
-canvas.addEventListener('mouseup', function(e) {
-  mousePos = getCursorPosition(canvas, e);
-  handleMouseUp(mousePos.x, mousePos.y);
-});
+canvas.addEventListener('mousedown', handleInputPosition);
+canvas.addEventListener('touchstart', handleInputPosition);
+canvas.addEventListener('mouseup', handleInputPosition);
+canvas.addEventListener('touchend', handleInputPosition);
 
 document.body.appendChild(canvas);
 var ctx = canvas.getContext('2d');
@@ -42,17 +39,7 @@ loadMapDetails();
 drawGrid();
 drawMenuUI();
 window.onresize = handleResize;
-window.onwheel = function(e) {
-  handleWheel(e);
-}
-
-function getCursorPosition(canvas, event) {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left - 1;
-  const y = event.clientY - rect.top - 1;
-
-  return {x: x, y: y};
-}
+window.onwheel = handleWheel;
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
