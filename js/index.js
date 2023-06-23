@@ -1,5 +1,7 @@
 // mouse tracking for drag
 var startInputPos;
+var endInputPos;
+var dragging = false;
 
 // canvas setup
 var canvas = document.createElement('canvas');
@@ -9,6 +11,7 @@ canvas.width = window.innerWidth - 12;
 canvas.height = window.innerHeight - 12;
 canvas.addEventListener('mousedown', handleInputPosition);
 canvas.addEventListener('touchstart', handleInputPosition);
+canvas.addEventListener('touchmove', handleInputPosition);
 canvas.addEventListener('mouseup', handleInputPosition);
 canvas.addEventListener('touchend', handleInputPosition);
 
@@ -19,7 +22,7 @@ var ctx = canvas.getContext('2d');
 var shapeType = 6;
 var angle = 2 * Math.PI / shapeType;
 var angleOffset = 2 * Math.PI / 4;
-var radius = 25 * zoom;
+var radius = 25 * window.devicePixelRatio * zoom;
 var buttonRadius = radius / 2;
 
 // supporting vars to draw and track state for grid and ui

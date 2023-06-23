@@ -15,7 +15,7 @@ function handleWheel(e) {
 
   if (newZoom != zoom) {
     zoom = newZoom;
-    radius = 25 * zoom;
+    radius = 25 * window.devicePixelRatio * zoom;
 
     updateGridPositions();
 
@@ -145,10 +145,12 @@ function handleInputPosition(e) {
   if (e.type == "mouseup" || e.type == "mousedown") {
     ePos.x = e.clientX;
     ePos.y = e.clientY;
-  } else {
+  } else if (e.type == "touchstart" || e.type == "touchmove"){
     ePos.x = e.touches[0].clientX;
     ePos.y = e.touches[0].clientY;
   }
+
+  if (e.type == "touchmove") dragging = true;
 
   const rect = canvas.getBoundingClientRect();
   ePos.x -= rect.left - 1;
@@ -156,7 +158,15 @@ function handleInputPosition(e) {
 
   if (e.type == "mousedown" || e.type == "touchstart") {
     startInputPos = {x: ePos.x, y: ePos.y};
-  } else {
-    handleRelease(ePos.x, ePos.y);
+  }
+  if (e.type == "mouseup" || e.type == "touchstart" || e.type == "touchmove") {
+    endInputPos = {x: ePos.x, y: ePos.y};
+  }
+  if (e.type == "touchend" && dragging) {
+    handleRelease(endInputPos.x, endInputPos.y);
+    dragging = false;
+  }
+  if (e.type == "mouseup") {
+    handleRelease(endInputPos.x, endInputPos.y);
   }
 }
