@@ -1,4 +1,4 @@
-// mouse tracking for drag
+// input tracking for drag
 var startInputPos;
 var endInputPos;
 var dragging = false;

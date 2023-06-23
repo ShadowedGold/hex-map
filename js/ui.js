@@ -248,7 +248,7 @@ function drawButton(x, y, button) {
   switch (button) {
     case "cancel":
       emojiFontStyle();
-      ctx.fillText("🗙", x, y);
+      ctx.fillText("⨉", x, y); //×╳✕✖❌⨉⨯🗙🞩
       break;
     case "eye":
       emojiFontStyle();
