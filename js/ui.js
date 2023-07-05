@@ -31,6 +31,22 @@ function handleHexButtonOutcome(button) {
         case "cancel":
           activeHexUI = undefined;
           break;
+        case "all":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          const features = ['biomes', 'roads', 'aoi'];
+          let hexName = getHexName([activeHex[0],activeHex[1]]);
+          if (features.every(feature => {
+            return mapDetails.data[hexName][feature]['known'];
+          })) {
+            features.forEach(feature => {
+              toggleVisibility(feature);
+            });
+          } else {
+            features.forEach(feature => {
+              mapDetails.data[hexName][feature]['known'] = true;
+            });
+          }
+          break;
         case "biomes":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
           toggleVisibility('biomes');
@@ -195,7 +211,7 @@ function getActiveHexUIList() {
       return ["cancel", "eye", "biomes", "roads", "aoi1"];
     case "eye":
       // toggle visibility ui
-      return ["cancel", "biomes", "roads", "aoi1"];
+      return ["cancel", "all", "biomes", "roads", "aoi1"];
     case "biomes":
       // alter biomes
       return ["cancel", "hex", "tri0"];
@@ -262,9 +278,14 @@ function drawButton(x, y, button) {
       emojiFontStyle();
       ctx.fillText("⚙️", x, y);
       break;
-    case "biomes":
+    case "all":
       drawBiomeObject(x, y, buttonRadius, ["forest", "plains", "plains", "plains", "water", "forest"]);
+      drawRoadObject(x, y, buttonRadius, [1,3], true);
+      drawAoiObject(x, y, buttonRadius, 1);
       break;
+    case "biomes":
+    drawBiomeObject(x, y, buttonRadius, ["forest", "plains", "plains", "plains", "water", "forest"]);
+    break;
     case "hex":
       drawBiomeObject(x, y, buttonRadius, ["forest", "forest", "forest", "forest", "forest", "forest"]);
       break;
@@ -407,6 +428,12 @@ function getHexButtonStateColour(button) {
     case "eye":
       // toggle visibility ui
       switch (button) {
+        case "all":
+          if (mapDetails.data[hexName]['biomes']['known'] &&
+              mapDetails.data[hexName]['roads']['known'] &&
+              mapDetails.data[hexName]['aoi']['known'])
+              colour = 'yellow';
+          break;
         case "biomes":
           if (mapDetails.data[hexName]['biomes']['known']) colour = 'yellow';
           break;

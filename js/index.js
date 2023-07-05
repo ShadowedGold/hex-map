@@ -278,14 +278,16 @@ function drawRoad(x, y, num) {
   }
 }
 
-function drawRoadObject(x, y, r, roadNodes) {
+function drawRoadObject(x, y, r, roadNodes, opt) {
   for (let i = 0; i < roadNodes.length; i++) {
     ctx.beginPath();
     ctx.lineTo(x, y);
     let xx = x + r * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     let yy = y + r * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     ctx.lineTo(xx, yy);
-    ctx.lineWidth = (r == radius) ? radius/10 : buttonRadius*2/10;
+    if (r == radius) ctx.lineWidth = radius/10;
+    else if (opt == undefined) ctx.lineWidth = buttonRadius*2/10;
+    else ctx.lineWidth = buttonRadius/10;
     ctx.strokeStyle = 'sienna';
     ctx.stroke();
   }
