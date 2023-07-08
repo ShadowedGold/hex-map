@@ -406,6 +406,16 @@ function emojiFontStyle() {
   ctx.font = fontsize+"px Noto Emoji";
 }
 
+/*
+function buttonFontStyle() {
+  ctx.fillStyle = 'black';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  let fontsize = buttonRadius * 0.8;
+  ctx.font = fontsize+"px sans-serif";
+}
+*/
+
 function pathButtonOutline(x, y) {
   ctx.beginPath();
   ctx.arc(x, y, buttonRadius, 0, 2 * Math.PI, false);
