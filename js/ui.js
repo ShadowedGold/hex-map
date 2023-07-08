@@ -141,6 +141,15 @@ function handleHexButtonOutcome(button) {
 
 function handleMenuButtonOutcome(button) {
   switch (button) {
+    case "save":
+      save();
+      break;
+    case "load":
+      load();
+      break;
+    case "clear":
+      clearMapData();
+      break;
     case "eye":
       ignoreFog = !ignoreFog;
       break;
@@ -234,7 +243,7 @@ function getActiveHexUIList() {
 }
 
 function getActiveMenuUIList() {
-  return (menuOpen) ? ["cancel", "eye", "pencil"] : ["closed"];
+  return (menuOpen) ? ["cancel", "eye", "pencil", "clear", "load", "save"] : ["closed"];
 }
 
 function drawHexUI(x, y) {
@@ -266,6 +275,18 @@ function drawButton(x, y, button) {
       emojiFontStyle();
       ctx.fillText("⨉", x, y); //×╳✕✖❌⨉⨯🗙🞩
       break;
+    case "save":
+      emojiFontStyle();
+      ctx.fillText("💾", x, y);
+      break;
+    case "load":
+      emojiFontStyle();
+      ctx.fillText("📂", x, y);
+      break;
+    case "clear":
+      emojiFontStyle();
+      ctx.fillText("🗑️", x, y);
+      break;
     case "eye":
       emojiFontStyle();
       ctx.fillText("👁️", x, y);
@@ -284,8 +305,8 @@ function drawButton(x, y, button) {
       drawAoiObject(x, y, buttonRadius, 1);
       break;
     case "biomes":
-    drawBiomeObject(x, y, buttonRadius, ["forest", "plains", "plains", "plains", "water", "forest"]);
-    break;
+      drawBiomeObject(x, y, buttonRadius, ["forest", "plains", "plains", "plains", "water", "forest"]);
+      break;
     case "hex":
       drawBiomeObject(x, y, buttonRadius, ["forest", "forest", "forest", "forest", "forest", "forest"]);
       break;
@@ -509,4 +530,13 @@ function drawMenuUI() {
 
     menuUICoords.push([i, x, y]);
   });
+}
+
+function clearMapData() {
+  if (confirm("Are you sure you want to clear the map?") == true) {
+    mapDetails.clear();
+    activeHex = undefined;
+    activeHexUI = undefined;
+    redrawAll();
+  }
 }

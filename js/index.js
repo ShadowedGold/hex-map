@@ -165,6 +165,7 @@ function drawGrid() {
   }
 }
 
+/*
 function getSurroundingHexes(col, row, expanded) {
   let hexSearchArr = [[-1, (col % 2) ? 0 : -1],
                       [-1, (col % 2) ? 1 :  0],
@@ -201,6 +202,7 @@ function getSurroundingHexes(col, row, expanded) {
 
   return hexFoundArr;
 }
+*/
 
 function getHexName(num) {
   return 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
