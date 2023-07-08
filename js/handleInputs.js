@@ -8,7 +8,15 @@ function handleResize() {
 }
 
 function handleWheel(e) {
-  let newZoom = zoom + e.deltaY * -0.0025;
+  handleZoom(e.deltaY);
+}
+
+function handlePinch(delta) {
+  handleZoom(delta);
+}
+
+function handleZoom(delta) {
+  let newZoom = zoom + delta * -0.0025;
 
   // Restrict zoom level
   newZoom = Math.min(Math.max(0.75, newZoom), 2.25);
@@ -136,37 +144,60 @@ function updateGridPositions() {
   }
 }
 
+function getH(t1, t2) {
+  return Math.hypot(t1.clientX - t2.clientX,
+                    t1.clientY - t2.clientY);
+}
+
 function handleInputPosition(e) {
-  let ePos = {
-    x: 0,
-    y: 0
-  };
-
-  if (e.type == "mouseup" || e.type == "mousedown") {
-    ePos.x = e.clientX;
-    ePos.y = e.clientY;
-  } else if (e.type == "touchstart" || e.type == "touchmove"){
-    ePos.x = e.touches[0].clientX;
-    ePos.y = e.touches[0].clientY;
+  if (e.type == "touchstart" && e.touches.length > 1) {
+    multiTouch.active = true;
+    multiTouch.h = getH(e.touches[0], e.touches[1]);
   }
 
-  if (e.type == "touchmove") dragging = true;
+  if (multiTouch.active) {
+    if (e.type == "touchmove") {
+      let h = getH(e.touches[0], e.touches[1]);
+      let delta = multiTouch.h-h;
+      multiTouch.h = h;
+      handlePinch(delta);
+    }
+    if (e.type == "touchend") {
+      multiTouch.active = false;
+      multiTouch.h = 0.0;
+    }
+  } else {
+    let ePos = {
+      x: 0,
+      y: 0
+    };
+  
+    if (e.type == "mouseup" || e.type == "mousedown") {
+      ePos.x = e.clientX;
+      ePos.y = e.clientY;
+    } else if (e.type == "touchstart" || e.type == "touchmove"){
+      ePos.x = e.touches[0].clientX;
+      ePos.y = e.touches[0].clientY;
+    }
+    
+    if (e.type == "touchmove") dragging = true;
 
-  const rect = canvas.getBoundingClientRect();
-  ePos.x -= rect.left - window.devicePixelRatio;
-  ePos.y -= rect.top - window.devicePixelRatio;
+    const rect = canvas.getBoundingClientRect();
+    ePos.x -= rect.left - window.devicePixelRatio;
+    ePos.y -= rect.top - window.devicePixelRatio;
 
-  if (e.type == "mousedown" || e.type == "touchstart") {
-    startInputPos = {x: ePos.x, y: ePos.y};
-  }
-  if (e.type == "mouseup" || e.type == "touchstart" || e.type == "touchmove") {
-    endInputPos = {x: ePos.x, y: ePos.y};
-  }
-  if (e.type == "touchend" && dragging) {
-    handleRelease(endInputPos.x, endInputPos.y);
-    dragging = false;
-  }
-  if (e.type == "mouseup") {
-    handleRelease(endInputPos.x, endInputPos.y);
+    if (e.type == "mousedown" || e.type == "touchstart") {
+      startInputPos = {x: ePos.x, y: ePos.y};
+    }
+    if (e.type == "mouseup" || e.type == "touchstart" || e.type == "touchmove") {
+      endInputPos = {x: ePos.x, y: ePos.y};
+    }
+    if (e.type == "touchend" && dragging) {
+      handleRelease(endInputPos.x, endInputPos.y);
+      dragging = false;
+    }
+    if (e.type == "mouseup") {
+      handleRelease(endInputPos.x, endInputPos.y);
+    }
   }
 }

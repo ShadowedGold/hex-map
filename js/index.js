@@ -1,7 +1,11 @@
-// input tracking for drag
+// input tracking for drag & pinch
 var startInputPos;
 var endInputPos;
 var dragging = false;
+var multiTouch = {
+  active: false,
+  h: 0.0
+};
 
 // viewport setup
 var padding = 5;
@@ -352,3 +356,23 @@ function drawHighlight(x, y, highlight) {
     ctx.stroke();
   }
 }
+
+/*
+function drawTest(text) {
+  ctx.beginPath();
+  ctx.rect(buttonRadius, buttonRadius, buttonRadius*6, buttonRadius)
+  ctx.strokeStyle = 'dimgrey';
+  ctx.stroke();
+  ctx.fillStyle = 'white';
+  ctx.fill();
+
+  if (multiTouch.active) {
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    let fontsize = buttonRadius;
+    ctx.font = fontsize+"px sans-serif";
+    ctx.fillText(text, buttonRadius, buttonRadius);
+  }
+}
+*/
