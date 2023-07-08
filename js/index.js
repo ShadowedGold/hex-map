@@ -123,19 +123,32 @@ function drawHex(x, y, num, colour, highlight) {
   ctx.fillStyle = colour;
   ctx.fill();
 
-  if (!biomeVisible(num)) {
-    ctx.fillStyle = 'silver';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    let fontsize = radius * 0.4;
-    ctx.font = fontsize+"px sans-serif";
-    ctx.fillText("["+(num[0] - mapHexOffset[0])+","+(num[1] - mapHexOffset[1])+"]", x, y);
-  }
+  if (!biomeVisible(num)) drawHexCoordsText(x, y, num, 'silver');
   
   drawBiome(x, y, num);
   drawRoad(x, y, num);
   drawAoi(x, y, num);
+
+  if (showCoords && biomeVisible(num)) drawHexCoordsText(x, y, num, 'black', 'white');
+
   drawHighlight(x, y, highlight);
+}
+
+function drawHexCoordsText(x, y, num, colour, strokeColour) {
+  ctx.fillStyle = colour;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  let fontsize = radius * 0.4;
+  ctx.font = fontsize+"px sans-serif";
+  let text = "["+(num[0] - mapHexOffset[0])+","+(num[1] - mapHexOffset[1])+"]";
+
+  if (strokeColour != undefined) {
+    ctx.lineWidth = radius * 0.05;
+    ctx.strokeStyle = strokeColour;
+    ctx.strokeText(text, x, y);
+  }
+
+  ctx.fillText(text, x, y);
 }
 
 function pathHex(x, y) {

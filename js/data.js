@@ -2,22 +2,47 @@ var saveData = {
   zoom: zoom,
   ignoreFog: ignoreFog,
   editMode: editMode,
+  showCoords: showCoords,
   mapHexOffset: mapHexOffset,
   mapDetails: mapDetails.save()
 };
 
-async function save() {
-  const handle = await getNewFileHandle();
+const errorStr = "Not supported on mobile. Try using Chrome or Edge on desktop.";
 
+async function save() {
+  try {
+    const handle = await getNewFileHandle();
+  } catch (error) {
+    if (error instanceof TypeError) {
+      alert(errorStr);
+      return;
+    } else return;
+  }
+
+  updateSaveData();
+  var file = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
+  writeFile(handle, file);
+}
+
+function updateSaveData() {
   saveData.zoom = zoom;
   saveData.ignoreFog = ignoreFog;
   saveData.editMode = editMode;
+  saveData.showCoords = showCoords;
   saveData.mapHexOffset = mapHexOffset;
   saveData.mapDetails = mapDetails.save();
+}
 
-  var file = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
-
-  writeFile(handle, file);
+function applySaveData() {
+  zoom = saveData.zoom;
+  ignoreFog = saveData.ignoreFog;
+  editMode = saveData.editMode;
+  showCoords = saveData.showCoords;
+  mapHexOffset = saveData.mapHexOffset;
+  mapDetails.data = saveData.mapDetails;
+  activeHex = undefined;
+  activeHexUI = undefined;
+  redrawAll();
 }
 
 async function getNewFileHandle() {
@@ -56,29 +81,23 @@ async function load() {
   };
 
   let fileHandle;
-  [fileHandle] = await window.showOpenFilePicker(options);
+  try {
+    [fileHandle] = await window.showOpenFilePicker(options);
+  } catch (error) {
+    if (error instanceof TypeError) {
+      alert(errorStr);
+      return;
+    } else return;
+  }
+  
   const file = await fileHandle.getFile();
   const contents = await file.text();
-
   saveData = JSON.parse(contents);
-  zoom = saveData.zoom;
-  ignoreFog = saveData.ignoreFog;
-  editMode = saveData.editMode;
-  mapHexOffset = saveData.mapHexOffset;
-  mapDetails.data = saveData.mapDetails;
-  activeHex = undefined;
-  activeHexUI = undefined;
-  redrawAll();
-  alert("loaded saved data");
+  applySaveData();
 }
 
 function saveLocalData() {
-  saveData.zoom = zoom;
-  saveData.ignoreFog = ignoreFog;
-  saveData.editMode = editMode;
-  saveData.mapHexOffset = mapHexOffset;
-  saveData.mapDetails = mapDetails.save();
-  
+  updateSaveData();
   localStorage.setItem('saveData', JSON.stringify(saveData));
   alert("data saved");
 }
@@ -88,14 +107,7 @@ function retrieveLocalData() {
     alert("no saved data");
   } else {
     saveData = JSON.parse(localStorage.getItem('saveData'));
-    zoom = saveData.zoom;
-    ignoreFog = saveData.ignoreFog;
-    editMode = saveData.editMode;
-    mapHexOffset = saveData.mapHexOffset;
-    mapDetails.data = saveData.mapDetails;
-    activeHex = undefined;
-    activeHexUI = undefined;
-    redrawAll();
+    applySaveData();
     alert("loaded saved data");
   }
 }
