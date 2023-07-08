@@ -6,7 +6,73 @@ var saveData = {
   mapDetails: mapDetails.save()
 };
 
-function save() {
+async function save() {
+  const handle = await getNewFileHandle();
+
+  saveData.zoom = zoom;
+  saveData.ignoreFog = ignoreFog;
+  saveData.editMode = editMode;
+  saveData.mapHexOffset = mapHexOffset;
+  saveData.mapDetails = mapDetails.save();
+
+  var file = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
+
+  writeFile(handle, file);
+}
+
+async function getNewFileHandle() {
+  const options = {
+    suggestedName: 'hexMapSave_01.json',
+    startIn: 'downloads',
+    types: [{
+      description: 'JSON File',
+      accept: {
+        'application/json': ['.json']
+      }
+    }]
+  };
+
+  const handle = await window.showSaveFilePicker(options);
+  return handle;
+}
+
+async function writeFile(fileHandle, contents) {
+  const writable = await fileHandle.createWritable();
+  await writable.write(contents);
+  await writable.close();
+}
+
+async function load() {
+  const options = {
+    startIn: 'downloads',
+    multiple: false,
+    excludeAcceptAllOption: true,
+    types: [{
+      description: 'JSON File',
+      accept: {
+        'application/json': ['.json']
+      }
+    }]
+  };
+
+  let fileHandle;
+  [fileHandle] = await window.showOpenFilePicker(options);
+  const file = await fileHandle.getFile();
+  const contents = await file.text();
+
+  saveData = JSON.parse(contents);
+  zoom = saveData.zoom;
+  ignoreFog = saveData.ignoreFog;
+  editMode = saveData.editMode;
+  mapHexOffset = saveData.mapHexOffset;
+  mapDetails.data = saveData.mapDetails;
+  activeHex = undefined;
+  activeHexUI = undefined;
+  redrawAll();
+  alert("loaded saved data");
+}
+
+function saveLocalData() {
   saveData.zoom = zoom;
   saveData.ignoreFog = ignoreFog;
   saveData.editMode = editMode;
@@ -17,7 +83,7 @@ function save() {
   alert("data saved");
 }
 
-function retrieve() {
+function retrieveLocalData() {
   if (localStorage.getItem('saveData') === null) {
     alert("no saved data");
   } else {
@@ -34,7 +100,7 @@ function retrieve() {
   }
 }
 
-function deleteData() {
+function deleteLocalData() {
   if (localStorage.getItem('saveData') === null) {
     alert("saved data does not exist");
   } else {

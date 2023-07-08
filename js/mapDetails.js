@@ -1,7 +1,8 @@
 var mapDetails = {
   data: {},
   save: function () { return this.data; },
-  update: function () { this.data = saveData.mapDetails; }
+  update: function () { this.data = saveData.mapDetails; },
+  clear: function () { this.data = {}; }
 };
 
 function prepHexForUpdate(num) {
