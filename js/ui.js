@@ -160,6 +160,9 @@ function handleMenuButtonOutcome(button) {
         activeHexUI = undefined;
       }
       break;
+    case "coords":
+      showCoords = !showCoords;
+      break;
     default:
       menuOpen = !menuOpen;
       break;
@@ -243,7 +246,7 @@ function getActiveHexUIList() {
 }
 
 function getActiveMenuUIList() {
-  return (menuOpen) ? ["cancel", "eye", "pencil", "clear", "load", "save"] : ["closed"];
+  return (menuOpen) ? ["cancel", "coords", "eye", "pencil", "clear", "load", "save"] : ["closed"];
 }
 
 function drawHexUI(x, y) {
@@ -294,6 +297,10 @@ function drawButton(x, y, button) {
     case "pencil":
       emojiFontStyle();
       ctx.fillText("✏️", x, y);
+      break;
+    case "coords":
+      emojiFontStyle();
+      ctx.fillText("⚓", x, y); //📍🌐#️🗺️
       break;
     case "closed":
       emojiFontStyle();
@@ -510,6 +517,9 @@ function getMenuButtonStateColour(button) {
       break;
     case "pencil":
       if (editMode) colour = 'yellow';
+      break;
+    case "coords":
+      if (showCoords) colour = 'yellow';
       break;
   }
 
