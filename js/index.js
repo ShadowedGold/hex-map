@@ -6,6 +6,10 @@ var multiTouch = {
   active: false,
   h: 0.0
 };
+var dragOffsets = {
+  x: 0,
+  y: 0
+};
 
 // viewport setup
 var padding = 5;
@@ -18,10 +22,19 @@ canvas.id = "hexCanvas";
 canvas.style.borderWidth = window.devicePixelRatio+"px";
 canvas.width = window.innerWidth - ((padding + 1) * 2 * window.devicePixelRatio);
 canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
-canvas.addEventListener('mousedown', handleInputPosition);
+canvas.addEventListener('mousedown', (e) => {
+  canvas.addEventListener('mousemove', handleInputPosition);
+  handleInputPosition(e);
+});
 canvas.addEventListener('touchstart', handleInputPosition);
 canvas.addEventListener('touchmove', handleInputPosition);
-canvas.addEventListener('mouseup', handleInputPosition);
+canvas.addEventListener('mouseup', (e) => {
+  canvas.removeEventListener('mousemove', handleInputPosition);
+  handleInputPosition(e);
+});
+canvas.addEventListener('mouseout', () => {
+  canvas.removeEventListener('mousemove', handleInputPosition);
+});
 canvas.addEventListener('touchend', handleInputPosition);
 
 document.body.appendChild(canvas);
@@ -173,8 +186,8 @@ function drawGrid() {
   hexCoords = [];
   for (let i = 0; i < dimensions.cols; i++) {
     for (let j = 0; j < dimensions.rows; j++) {
-      let x = (radius * i * 1.5) + offsets.x;
-      let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y;
+      let x = (radius * i * 1.5) + offsets.x + dragOffsets.x;
+      let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y + dragOffsets.y;
       let adjJ = (mapHexOffset[0] % 2 && !(i % 2)) ? j-1 : j;
       drawHex(x, y, [i, adjJ], getHexBgColour(i, j));
       hexCoords.push([i, adjJ, x, y]);
