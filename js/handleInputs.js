@@ -221,6 +221,7 @@ function handleInputPosition(e) {
     }
     if (e.type == "mousemove" || e.type == "touchmove") {
       dragging = true;
+      canvas.style.cursor = "grabbing";
       handleRelease(endInputPos.x, endInputPos.y);
     }
     if (e.type == "mouseup") {
@@ -228,6 +229,7 @@ function handleInputPosition(e) {
     }
     if ((e.type == "mouseup" || e.type == "touchend") && dragging) {
       dragging = false;
+      canvas.style.cursor = (editMode) ? "pointer" : "grab";
     }
   }
 }
@@ -236,4 +238,20 @@ function updateEPos(ePos) {
   const rect = canvas.getBoundingClientRect();
   ePos.x -= rect.left - window.devicePixelRatio;
   ePos.y -= rect.top - window.devicePixelRatio;
+}
+
+function updateCursor(e) {
+  let ePos = {
+    x: e.clientX,
+    y: e.clientY
+  };
+  updateEPos(ePos);
+
+  let button = getButton(ePos.x, ePos.y, menuUICoords);
+  if (!editMode) {
+    // if over top menu ui button...
+    if (button != undefined) canvas.style.cursor = "pointer";
+    // if not over top menu ui button...
+    else canvas.style.cursor = "grab";
+  }
 }

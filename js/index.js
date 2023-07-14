@@ -36,6 +36,7 @@ canvas.addEventListener('mouseout', () => {
   canvas.removeEventListener('mousemove', handleInputPosition);
 });
 canvas.addEventListener('touchend', handleInputPosition);
+canvas.addEventListener('mousemove', updateCursor);
 
 document.body.appendChild(canvas);
 var ctx = canvas.getContext('2d');
@@ -65,6 +66,7 @@ drawGrid();
 drawMenuUI();
 window.onresize = handleResize;
 window.onwheel = handleWheel;
+canvas.style.cursor = (editMode) ? "pointer" : "grab";
 
 function getRadius() {
   return 25 * zoom * window.devicePixelRatio * mobileMultiplier();
