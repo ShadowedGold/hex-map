@@ -1,5 +1,5 @@
 function drawActiveHexAndUI() {
-  drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], getHexBgColour(activeHex[0], activeHex[1]), "yellow");
+  drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], "yellow");
   drawHexUI(activeHex[2], activeHex[3]);
 }
 
@@ -194,7 +194,7 @@ function updateHexAndSurrounds(hex, expanded) {
         return true;
       }
     });
-    drawHex(hexDetails[2], hexDetails[3], [hexDetails[0], hexDetails[1]], getHexBgColour(hexDetails[0], hexDetails[1]));
+    drawHex(hexDetails[2], hexDetails[3], [hexDetails[0], hexDetails[1]]);
   });
 }
 */
