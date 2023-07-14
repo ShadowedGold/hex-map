@@ -2,7 +2,7 @@ function handleResize() {
   canvas.width = window.innerWidth - ((padding + 1) * 2 * window.devicePixelRatio);
   canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
 
-  updateGridPositions();
+  updateGridPositions(canvas.width/2, canvas.height/2);
 }
 
 function handleWheel(e) {
@@ -26,8 +26,7 @@ function handleZoom(x, y, delta) {
 
   if (newZoom != zoom) {
     zoom = newZoom;
-    radius = getRadius();
-
+    
     updateGridPositions(x, y);
   }
 }
@@ -159,17 +158,25 @@ function updateGridPositions() {
 */
 
 function updateGridPositions(x, y) {
-  x = (x != undefined) ? x : 0;
-  y = (y != undefined) ? y : 0;
-
   var firstHex = getHexFromXY(x, y);
+
+  let cursorDif = {
+    x: (x - firstHex[2]) / radius,
+    y: (y - firstHex[3]) / radius
+  };
   
+  radius = getRadius();
   dimensions = getDimensions();
   offsets = getOffsets();
 
   drawGrid();
 
   var secondHex = getHexFromXY(x, y);
+
+  cursorDif = {
+    x: cursorDif.x * radius,
+    y: cursorDif.y * radius
+  };
 
   let offsetX = firstHex[0] - secondHex[0];
   let offsetY = firstHex[1] - secondHex[1];
@@ -189,7 +196,8 @@ function updateGridPositions(x, y) {
     activeHex[1] -= offsetY;
   }
 
-  handleDrag(x-secondHex[2], y-secondHex[3]);
+  handleDrag(x - secondHex[2] - cursorDif.x,
+             y - secondHex[3] - cursorDif.y);
 }
 
 function getH(t1, t2) {
