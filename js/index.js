@@ -257,9 +257,14 @@ function getHexFromXY(canvasX, canvasY) {
 
 function biomeVisible(num) {
   let hexName = getHexName(num);
+  
+  let isActive = ((activeHex != undefined) &&
+                  (num[0] == activeHex[0]) &&
+                  (num[1] == activeHex[1])) ? true : false;
+
   if ((mapDetails.data.hasOwnProperty(hexName) &&
        !mapDetails.data[hexName]['biomes']['known'] &&
-       ignoreFog) ||
+       (ignoreFog || isActive)) ||
       (mapDetails.data.hasOwnProperty(hexName) &&
        mapDetails.data[hexName]['biomes']['known'])) {
     return true;
@@ -268,8 +273,12 @@ function biomeVisible(num) {
 
 function drawBiome(x, y, num) {
   let hexName = getHexName(num);
+  let isActive = ((activeHex != undefined) &&
+                  (num[0] == activeHex[0]) &&
+                  (num[1] == activeHex[1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
-     (mapDetails.data[hexName]['biomes']['known'] || ignoreFog)) {
+     (mapDetails.data[hexName]['biomes']['known'] ||
+     ignoreFog || isActive)) {
     let biomeNodes = mapDetails.data[hexName]['biomes']['value'];
 
     if (!mapDetails.data[hexName]['biomes']['known']) ctx.globalAlpha = fogTransparency;
@@ -317,8 +326,12 @@ function getBiomeColour(biome) {
 
 function drawRoad(x, y, num) {
   let hexName = getHexName(num);
+  let isActive = ((activeHex != undefined) &&
+                  (num[0] == activeHex[0]) &&
+                  (num[1] == activeHex[1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
-     (mapDetails.data[hexName]['roads']['known'] || ignoreFog)) {
+     (mapDetails.data[hexName]['roads']['known'] ||
+      ignoreFog || isActive)) {
     let roadNodes = mapDetails.data[hexName]['roads']['value'];
     
     if (!mapDetails.data[hexName]['roads']['known']) ctx.globalAlpha = fogTransparency;
@@ -344,8 +357,12 @@ function drawRoadObject(x, y, r, roadNodes, opt) {
 
 function drawAoi(x, y, num) {
   let hexName = getHexName(num);
+  let isActive = ((activeHex != undefined) &&
+                  (num[0] == activeHex[0]) &&
+                  (num[1] == activeHex[1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
-     (mapDetails.data[hexName]['aoi']['known'] || ignoreFog)) {
+     (mapDetails.data[hexName]['aoi']['known'] ||
+     ignoreFog || isActive)) {
     if (mapDetails.data[hexName]['aoi']['value'] != 0) {
       if (!mapDetails.data[hexName]['aoi']['known']) ctx.globalAlpha = fogTransparency;
       drawAoiObject(x, y, radius, mapDetails.data[hexName]['aoi']['value']);
