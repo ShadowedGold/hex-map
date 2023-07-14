@@ -3,7 +3,7 @@ var mapDetails = {
   save: function () { return this.data; },
   update: function () { this.data = saveData.mapDetails; },
   clearAllHexes: function () { this.data = {}; },
-  clearHex: function (num) {delete this.data[num]; }
+  clearHex: function (num) { delete this.data[num]; }
 };
 
 function prepHexForUpdate(num) {
