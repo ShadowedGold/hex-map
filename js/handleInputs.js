@@ -221,7 +221,7 @@ function handleInputPosition(e) {
     }
     if (e.type == "mousemove" || e.type == "touchmove") {
       dragging = true;
-      canvas.style.cursor = "grabbing";
+      canvas.style.cursor = "grabbing"; //all-scroll
       handleRelease(endInputPos.x, endInputPos.y);
     }
     if (e.type == "mouseup") {
