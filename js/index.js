@@ -91,14 +91,14 @@ function mobileMultiplier() {
 
 function getDimensions() {
   let cols = Math.ceil(canvas.width/(radius * 1.5)) + 1;
-  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 1;
+  let rows = Math.ceil(canvas.height/(radius * Math.sin(angle) * 2)) + 2;
 
   return {cols: cols, rows: rows};
 }
 
 function getOffsets() {
   let x = (canvas.width - ((dimensions.cols-1) * radius * 1.5)) / 2;
-  let y = (canvas.height - ((dimensions.rows-0.5) * radius * Math.sin(angle) * 2)) / 2;
+  let y = (canvas.height - ((dimensions.rows-2) * radius * Math.sin(angle) * 2)) / 2;
 
   return {x: x, y: y};
 }
