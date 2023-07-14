@@ -224,7 +224,7 @@ function getActiveHexUIList() {
       return ["cancel", "road0", "road1", "road2", "road3", "road4", "road5"];
     case "aoi":
       // toggle aoi
-      return ["cancel", "aoi0", "aoi1", "aoi2"];
+      return ["cancel", "aoi0", "aoi1", "aoi2", "aoi3"];
   }
 }
 
@@ -307,6 +307,9 @@ function drawButton(x, y, button) {
       break;
     case "aoi2":
       drawAoiObject(x, y, buttonRadius*2, 2);
+      break;
+    case "aoi3":
+      drawAoiObject(x, y, buttonRadius*2, 3);
       break;
     case "tri0":
       drawBiomeObject(x, y, buttonRadius, ["forest"]);
