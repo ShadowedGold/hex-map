@@ -23,6 +23,11 @@ function handleHexButtonOutcome(button) {
           prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeHexUI = "aoi";
           break;
+        case "clear":
+          if (confirm("Are you sure you want to clear the hex?") == true) {
+            mapDetails.clearHex(getHexName(activeHex));
+          }
+          break;
       }
       break;
     case "eye":
@@ -203,7 +208,7 @@ function getActiveHexUIList() {
   switch (activeHexUI) {
     case undefined:
       // first level of ui
-      return ["cancel", "eye", "biomes", "roads", "aoi1"];
+      return ["cancel", "eye", "biomes", "roads", "aoi1", "clear"];
     case "eye":
       // toggle visibility ui
       return ["cancel", "all", "biomes", "roads", "aoi1"];
@@ -540,7 +545,7 @@ function drawMenuUI() {
 
 function clearMapData() {
   if (confirm("Are you sure you want to clear the map?") == true) {
-    mapDetails.clear();
+    mapDetails.clearAllHexes();
     activeHex = undefined;
     activeHexUI = undefined;
     redrawAll();
