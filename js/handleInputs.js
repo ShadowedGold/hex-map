@@ -126,37 +126,6 @@ function handleDrag(x, y) {
   redrawAll(true);
 }
 
-/*
-function updateGridPositions() {
-  if (activeHex != undefined) {
-    var percentX = activeHex[0] / dimensions.cols;
-    var percentY = activeHex[1] / dimensions.rows;
-  }
-
-  dimensions = getDimensions();
-  offsets = getOffsets();
-
-  if (activeHex != undefined) {
-    let newX = Math.round(dimensions.cols * percentX);
-    let newY = Math.round(dimensions.rows * percentY);
-
-    if (newX == dimensions.cols-1) newX--;
-    if (newX == 0) newX++;
-    if (newY == dimensions.rows-1) newY--;
-    if (newY == 0) newY++;
-    
-    let offsetX = activeHex[0] - newX;
-    let offsetY = activeHex[1] - newY;
-
-    mapHexOffset[0] -= offsetX;
-    mapHexOffset[1] -= offsetY;
-
-    activeHex[0] -= offsetX;
-    activeHex[1] -= offsetY;
-  }
-}
-*/
-
 function updateGridPositions(x, y) {
   var firstHex = getHexFromXY(x, y);
 
