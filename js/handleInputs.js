@@ -117,8 +117,8 @@ function handleDrag(x, y) {
 
     if (activeHex[0] > dimensions.cols-2 ||
         activeHex[0] < 1 ||
-        activeHex[1] > dimensions.rows-2 ||
-        activeHex[1] < 1) {
+        activeHex[1] > dimensions.rows-3 ||
+        activeHex[1] < 0) {
       activeHex = undefined;
       activeHexUI = undefined;
     }
@@ -171,8 +171,23 @@ function updateGridPositions(x, y) {
 
   var secondHex = getHexFromXY(x, y);
 
-  mapHexOffset[0] -= firstHex[0] - secondHex[0];
-  mapHexOffset[1] -= firstHex[1] - secondHex[1];
+  let offsetX = firstHex[0] - secondHex[0];
+  let offsetY = firstHex[1] - secondHex[1];
+
+  let xCoord = firstHex[0] - mapHexOffset[0];
+
+  //if odd / odd / even
+  if ((xCoord % 2) && (offsetX % 2) && !(mapHexOffset[0] % 2)) offsetY++;
+  //if even / odd / odd
+  if (!(xCoord % 2) && (offsetX % 2) && (mapHexOffset[0] % 2)) offsetY--;
+
+  mapHexOffset[0] -= offsetX;
+  mapHexOffset[1] -= offsetY;
+
+  if (activeHex != undefined) {
+    activeHex[0] -= offsetX;
+    activeHex[1] -= offsetY;
+  }
 
   handleDrag(x-secondHex[2], y-secondHex[3]);
 }
