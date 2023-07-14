@@ -374,23 +374,51 @@ function drawAoiObject(x, y, r, value) {
   switch (value) {
     case 1:
       colour = "red";
+      circularAoi()
       break;
     case 2:
       colour = "blueviolet";
+      circularAoi()
+      break;
+    case 3:
+      colour = "gold";
+      starAoi()
       break;
     default:
       colour = "black";
+      circularAoi()
       break;
   }
 
-  ctx.beginPath();
-  ctx.arc(x, y, r/5, 0, 2 * Math.PI, false);
-  ctx.closePath();
-  ctx.fillStyle = 'white';
-  ctx.fill();
-  ctx.lineWidth = r/10;
-  ctx.strokeStyle = colour;
-  ctx.stroke();
+  function circularAoi() {
+    ctx.beginPath();
+    ctx.arc(x, y, r/5, 0, 2 * Math.PI, false);
+    ctx.closePath();
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.lineWidth = r/10;
+    ctx.strokeStyle = colour;
+    ctx.stroke();
+  }
+
+  function starAoi() {
+    a = 2 * Math.PI / 10;
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      let d = (i % 2) ? r/5 : r/10;
+      let xx = x + d * Math.cos(a * i + a * 0.5);
+      let yy = y + d * Math.sin(a * i + a * 0.5);
+      ctx.lineTo(xx, yy);
+    }
+    ctx.closePath();
+    ctx.lineWidth = r/5;
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'darkorange';
+    ctx.stroke();
+    ctx.fillStyle = colour;
+    ctx.fill();
+    ctx.lineJoin = 'miter';
+  }
 }
 
 function drawHighlight(x, y, highlight) {
