@@ -132,12 +132,12 @@ function redrawAll(activeHexXYChanged) {
   drawMenuUI();
 }
 
-function drawHex(x, y, num, colour, highlight) {
+function drawHex(x, y, num, highlight) {
   pathHex(x, y);
   ctx.lineWidth = radius/25;
   ctx.strokeStyle = 'dimgrey';
   ctx.stroke();
-  ctx.fillStyle = colour;
+  ctx.fillStyle = 'darkgrey';
   ctx.fill();
 
   if (!biomeVisible(num)) drawHexCoordsText(x, y, num, 'silver');
@@ -178,10 +178,6 @@ function pathHex(x, y) {
   ctx.closePath();
 }
 
-function getHexBgColour(col, row) {
-  return (col == 0 || col == dimensions.cols-1 || row == 0 || row == dimensions.rows-1) ? "grey" : "darkgray";
-}
-
 function drawGrid() {
   hexCoords = [];
   for (let i = 0; i < dimensions.cols; i++) {
@@ -189,7 +185,7 @@ function drawGrid() {
       let x = (radius * i * 1.5) + offsets.x + dragOffsets.x;
       let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y + dragOffsets.y;
       let adjJ = (mapHexOffset[0] % 2 && !(i % 2)) ? j-1 : j;
-      drawHex(x, y, [i, adjJ], getHexBgColour(i, j));
+      drawHex(x, y, [i, adjJ]);
       hexCoords.push([i, adjJ, x, y]);
     }
   }
