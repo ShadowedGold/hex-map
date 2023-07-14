@@ -337,18 +337,20 @@ function drawRoad(x, y, num) {
 }
 
 function drawRoadObject(x, y, r, roadNodes, opt) {
+  ctx.beginPath();
   for (let i = 0; i < roadNodes.length; i++) {
-    ctx.beginPath();
     ctx.lineTo(x, y);
     let xx = x + r * Math.cos(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     let yy = y + r * Math.sin(angle * (roadNodes[i]-1.5)) * Math.sqrt(3)/2;
     ctx.lineTo(xx, yy);
-    if (r == radius) ctx.lineWidth = radius/10;
-    else if (opt == undefined) ctx.lineWidth = buttonRadius*2/10;
-    else ctx.lineWidth = buttonRadius/10;
-    ctx.strokeStyle = 'sienna';
-    ctx.stroke();
   }
+  if (r == radius) ctx.lineWidth = radius/10;
+  else if (opt == undefined) ctx.lineWidth = buttonRadius*2/10;
+  else ctx.lineWidth = buttonRadius/10;
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'sienna';
+  ctx.stroke();
+  ctx.lineJoin = 'miter';
 }
 
 function drawAoi(x, y, num) {
