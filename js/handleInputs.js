@@ -3,19 +3,22 @@ function handleResize() {
   canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
 
   updateGridPositions();
-
-  redrawAll(true);
 }
 
 function handleWheel(e) {
-  handleZoom(e.deltaY);
+  let ePos = {
+    x: e.clientX,
+    y: e.clientY
+  }
+  updateEPos(ePos);
+  handleZoom(ePos.x, ePos.y, e.deltaY);
 }
 
-function handlePinch(delta) {
-  handleZoom(delta);
+function handlePinch(x, y, delta) {
+  handleZoom(x, y, delta);
 }
 
-function handleZoom(delta) {
+function handleZoom(x, y, delta) {
   let newZoom = zoom + delta * -0.0025;
 
   // Restrict zoom level
@@ -25,73 +28,9 @@ function handleZoom(delta) {
     zoom = newZoom;
     radius = getRadius();
 
-    updateGridPositions();
-
-    // redraw at new zoom
-    redrawAll(true);
+    updateGridPositions(x, y);
   }
 }
-
-/*
-function handleRelease(x, y) {
-  let button = getButton(x, y, menuUICoords);
-  if (button != undefined) {
-    // if top menu ui button hit...
-    handleMenuButtonOutcome(getActiveMenuUIList()[button[0]]);
-    redrawAll();
-  } else {
-    // no top menu ui button hit...
-
-    // check for drag
-    let dragged = undefined;
-    if (startInputPos.x != x || startInputPos.y != y) {
-      // if mouse pos diff was over 1 hex...
-      let startHex = getHexFromXY(startInputPos.x, startInputPos.y);
-      let endHex = getHexFromXY(x, y);
-      if (startHex[0] != endHex[0] || startHex[1] != endHex[1]) {
-        if ((startHex[0] % 2) && !(endHex[0] % 2)) {
-          if (mapHexOffset[0] % 2) endHex[1]++;
-          else endHex[1]--;
-        }
-
-        let difX = startHex[0] - endHex[0];
-        let difY = startHex[1] - endHex[1];
-
-        dragged = [difX, difY];
-      }
-    }
-
-    if (dragged != undefined) {
-      // if we just dragged
-      handleDrag(dragged[0], dragged[1]);
-    } else if (editMode && activeHex != undefined) {
-      // a hex is active, and we're in edit mode, look at hex ui buttons
-      button = getButton(x, y, hexUICoords);
-      if (button != undefined) {
-        // if hex ui button hit...
-        if (button[0] == 0 && activeHexUI == undefined) {
-          // if top level cancel button hit...
-          activeHex = undefined;
-        } else {
-          // button other than top level cancel button hit...
-          handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
-        }
-      } else {
-        // if no hex ui button hit...
-        activeHex = undefined;
-        activeHexUI = undefined;
-      }
-
-      redrawAll();
-    } else if (editMode) {
-      // no active hex, and we're in editMode, set active hex
-      let hex = getHexFromXY(x, y);
-      activeHex = hex;
-      redrawAll();
-    }
-  }
-}
-*/
 
 function handleRelease(x, y) {
   let button = getButton(x, y, menuUICoords);
@@ -133,32 +72,6 @@ function handleRelease(x, y) {
     }
   }
 }
-
-/*
-function handleDrag(x, y) {
-  let offsetX = x;
-  let offsetY = y;
-
-  mapHexOffset[0] -= offsetX;
-  mapHexOffset[1] -= offsetY;
-
-  if (activeHex != undefined) {
-    activeHex[0] -= offsetX;
-    activeHex[1] -= offsetY;
-
-    if (activeHex[0] > dimensions.cols-2 ||
-        activeHex[0] < 1 ||
-        activeHex[1] > dimensions.rows-2 ||
-        activeHex[1] < 1) {
-      activeHex = undefined;
-      activeHexUI = undefined;
-    }
-  }
-
-  // redraw at new zoom
-  redrawAll(true);
-}
-*/
 
 function handleDrag(x, y) {
   dragOffsets.x += x;
@@ -214,6 +127,7 @@ function handleDrag(x, y) {
   redrawAll(true);
 }
 
+/*
 function updateGridPositions() {
   if (activeHex != undefined) {
     var percentX = activeHex[0] / dimensions.cols;
@@ -242,13 +156,32 @@ function updateGridPositions() {
     activeHex[1] -= offsetY;
   }
 }
+*/
+
+function updateGridPositions(x, y) {
+  x = (x != undefined) ? x : 0;
+  y = (y != undefined) ? y : 0;
+
+  var firstHex = getHexFromXY(x, y);
+  
+  dimensions = getDimensions();
+  offsets = getOffsets();
+
+  drawGrid();
+
+  var secondHex = getHexFromXY(x, y);
+
+  mapHexOffset[0] -= firstHex[0] - secondHex[0];
+  mapHexOffset[1] -= firstHex[1] - secondHex[1];
+
+  handleDrag(x-secondHex[2], y-secondHex[3]);
+}
 
 function getH(t1, t2) {
   return Math.hypot(t1.clientX - t2.clientX,
                     t1.clientY - t2.clientY);
 }
 
-/*
 function handleInputPosition(e) {
   if (e.type == "touchstart" && e.touches.length > 1) {
     multiTouch.active = true;
@@ -260,7 +193,14 @@ function handleInputPosition(e) {
       let h = getH(e.touches[0], e.touches[1]);
       let delta = multiTouch.h-h;
       multiTouch.h = h;
-      handlePinch(delta);
+
+      let ePos = {
+        x: e.touches[0].clientX + ((e.touches[0].clientX - e.touches[1].clientX) / 2),
+        y: e.touches[0].clientY + ((e.touches[0].clientY - e.touches[1].clientY) / 2)
+      };
+      updateEPos(ePos);
+
+      handlePinch(ePos.x, ePos.y, delta);
     }
     if (e.type == "touchend") {
       multiTouch.active = false;
@@ -271,61 +211,6 @@ function handleInputPosition(e) {
       x: 0,
       y: 0
     };
-  
-    if (e.type == "mouseup" || e.type == "mousedown") {
-      ePos.x = e.clientX;
-      ePos.y = e.clientY;
-    } else if (e.type == "touchstart" || e.type == "touchmove"){
-      ePos.x = e.touches[0].clientX;
-      ePos.y = e.touches[0].clientY;
-    }
-    
-    if (e.type == "touchmove") dragging = true;
-
-    const rect = canvas.getBoundingClientRect();
-    ePos.x -= rect.left - window.devicePixelRatio;
-    ePos.y -= rect.top - window.devicePixelRatio;
-
-    if (e.type == "mousedown" || e.type == "touchstart") {
-      startInputPos = {x: ePos.x, y: ePos.y};
-    }
-    if (e.type == "mouseup" || e.type == "touchstart" || e.type == "touchmove") {
-      endInputPos = {x: ePos.x, y: ePos.y};
-    }
-    if (e.type == "touchend" && dragging) {
-      handleRelease(endInputPos.x, endInputPos.y);
-      dragging = false;
-    }
-    if (e.type == "mouseup") {
-      handleRelease(endInputPos.x, endInputPos.y);
-    }
-  }
-}
-*/
-
-function handleInputPosition(e) {
-  if (e.type == "touchstart" && e.touches.length > 1) {
-    multiTouch.active = true;
-    multiTouch.h = getH(e.touches[0], e.touches[1]);
-  }
-
-  if (multiTouch.active) {
-    if (e.type == "touchmove") {
-      let h = getH(e.touches[0], e.touches[1]);
-      let delta = multiTouch.h-h;
-      multiTouch.h = h;
-      handlePinch(delta);
-    }
-    if (e.type == "touchend") {
-      multiTouch.active = false;
-      multiTouch.h = 0.0;
-    }
-  } else {
-    let ePos = {
-      x: 0,
-      y: 0
-    };
-  
     if (e.type == "mouseup" || e.type == "mousemove" || e.type == "mousedown") {
       ePos.x = e.clientX;
       ePos.y = e.clientY;
@@ -333,10 +218,7 @@ function handleInputPosition(e) {
       ePos.x = e.touches[0].clientX;
       ePos.y = e.touches[0].clientY;
     }
-
-    const rect = canvas.getBoundingClientRect();
-    ePos.x -= rect.left - window.devicePixelRatio;
-    ePos.y -= rect.top - window.devicePixelRatio;
+    updateEPos(ePos);
 
     if (e.type == "mousedown" || e.type == "touchstart") {
       startInputPos = {x: ePos.x, y: ePos.y};
@@ -356,4 +238,10 @@ function handleInputPosition(e) {
       dragging = false;
     }
   }
+}
+
+function updateEPos(ePos) {
+  const rect = canvas.getBoundingClientRect();
+  ePos.x -= rect.left - window.devicePixelRatio;
+  ePos.y -= rect.top - window.devicePixelRatio;
 }

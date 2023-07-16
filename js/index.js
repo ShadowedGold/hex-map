@@ -238,6 +238,23 @@ function getHexName(num) {
   return 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
 }
 
+function getHexFromXY(canvasX, canvasY) {
+  let gotHex;
+  let d = Infinity;
+
+  hexCoords.forEach(hex => {
+    let a = Math.abs(hex[2] - canvasX);
+    let b = Math.abs(hex[3] - canvasY);
+    let h = Math.sqrt((a*a)+(b*b));
+    if (h < d) {
+      gotHex = hex;
+      d = h;
+    }
+  });
+
+  return gotHex;
+}
+
 function biomeVisible(num) {
   let hexName = getHexName(num);
   if ((mapDetails.data.hasOwnProperty(hexName) &&
