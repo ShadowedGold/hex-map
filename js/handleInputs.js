@@ -105,8 +105,7 @@ function handleRelease(x, y) {
     if (dragging) {
       // if we are dragging
       handleDrag(endInputPos.x - startInputPos.x, endInputPos.y - startInputPos.y);
-      startInputPos.x = x;
-      startInputPos.y = y;
+      startInputPos = {x: x, y: y};
     } else if (editMode && activeHex != undefined) {
       // a hex is active, and we're in edit mode, look at hex ui buttons
       button = getButton(x, y, hexUICoords);
@@ -171,23 +170,21 @@ function handleDrag(x, y) {
   let offsetX = 0;
   let offsetY = 0;
 
-  if (dragOffsets.x + offsets.x < -radius / 2) {
+  if ((dragOffsets.x + offsets.x) < (-radius)) {
     dragOffsets.x += hexWidth * 0.75;
     dragOffsets.y -= hexHeight / 2;
     offsetX++;
 
-    console.log("drag left");
-    //if even
-    //if (!(mapHexOffset[0] % 2)) offsetY++;
+    //if odd
+    if (mapHexOffset[0] % 2) offsetY--;
   }
-  if (dragOffsets.x + offsets.x > radius / 2) {
+  if ((dragOffsets.x + offsets.x) > (radius / 2)) {
     dragOffsets.x -= hexWidth * 0.75;
     dragOffsets.y += hexHeight / 2;
     offsetX--;
-
-    console.log("drag right");
-    //if odd
-    //if (mapHexOffset[0] % 2) offsetY--;
+    
+    //if even
+    if (!(mapHexOffset[0] % 2)) offsetY++;
   }
   if (dragOffsets.y + offsets.y < -hexHeight / 2) {
     dragOffsets.y += hexHeight;
