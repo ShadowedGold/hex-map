@@ -78,10 +78,10 @@ function updateActiveHexXY() {
   });
 }
 
-function redrawAll(zoom) {
+function redrawAll(activeHexXYChanged) {
   drawGrid();
   if (activeHex != undefined) {
-    if (zoom) updateActiveHexXY();
+    if (activeHexXYChanged) updateActiveHexXY();
     drawActiveHexAndUI();
   }
   drawMenuUI();
@@ -101,7 +101,7 @@ function drawHex(x, y, num, colour, highlight) {
     ctx.textBaseline = 'middle';
     let fontsize = radius * 0.4;
     ctx.font = fontsize+"px sans-serif";
-    ctx.fillText("["+num+"]", x, y);
+    ctx.fillText("["+(num[0] - mapHexOffset[0])+","+(num[1] - mapHexOffset[1])+"]", x, y);
   }
   
   drawBiome(x, y, num);
@@ -130,8 +130,9 @@ function drawGrid() {
     for (let j = 0; j < dimensions.rows; j++) {
       let x = (radius * i * 1.5) + offsets.x;
       let y = (radius * Math.sin(angle) * (i % 2)) + (radius * j * Math.sin(angle) * 2) + offsets.y;
-      drawHex(x, y, [i,j], getHexBgColour(i, j));
-      hexCoords.push([i,j,x,y]);
+      let adjJ = (mapHexOffset[0] % 2 && !(i % 2)) ? j-1 : j;
+      drawHex(x, y, [i, adjJ], getHexBgColour(i, j));
+      hexCoords.push([i, adjJ, x, y]);
     }
   }
 }

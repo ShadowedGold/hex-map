@@ -226,7 +226,7 @@ function drawHexUI(x, y) {
   let uiList = getActiveHexUIList();
 
   let buttonAngle = 2 * Math.PI / uiList.length;
-  let buttonRingRadius = radius * 2;
+  let buttonRingRadius = radius + (buttonRadius *2);
 
   uiList.forEach((button, i) => {
     let xx = x + buttonRingRadius * Math.cos((buttonAngle * i) - angleOffset) * Math.sqrt(3)/2;
