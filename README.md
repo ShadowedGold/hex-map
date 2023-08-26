@@ -10,5 +10,4 @@ A hex map experiment
   - Group edit
 - Reduce clicks to edit
 - Export image (draw frame)
-- Add labels
-  - Toggle label view
+- Review labels work

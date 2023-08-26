@@ -129,9 +129,17 @@ function redrawAll(activeHexXYChanged) {
   drawGrid();
   if (activeHex != undefined) {
     if (activeHexXYChanged) updateActiveHexXY();
-    drawActiveHexAndUI();
+    drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], "yellow");
   }
+  drawLabels();
+  if (activeHex != undefined) drawHexUI(activeHex[2], activeHex[3]);
   drawMenuUI();
+}
+
+function drawLabels() {
+  hexCoords.forEach(hex => {
+    drawLabel(hex[2], hex[3], [hex[0], hex[1]]);
+  });
 }
 
 function drawHex(x, y, num, highlight) {
@@ -234,6 +242,14 @@ function getSurroundingHexes(col, row, expanded) {
 
 function getHexName(num) {
   return 'x' + (num[0] - mapHexOffset[0]) + 'y' + (num[1] - mapHexOffset[1]);
+}
+
+function getLabel(num) {
+  let label = "";
+  let hexName = getHexName(num);
+  if (mapDetails.data[hexName] != undefined)
+  label = mapDetails.data[hexName]['label']['value'];
+  return label;
 }
 
 function getHexFromXY(canvasX, canvasY) {
@@ -421,6 +437,36 @@ function drawAoiObject(x, y, r, value) {
     ctx.fill();
     ctx.lineJoin = 'miter';
   }
+}
+
+function drawLabel(x, y, num) {
+  let hexName = getHexName(num);
+  let isActive = ((activeHex != undefined) &&
+                  (num[0] == activeHex[0]) &&
+                  (num[1] == activeHex[1])) ? true : false;
+  if (mapDetails.data.hasOwnProperty(hexName) &&
+     (mapDetails.data[hexName]['label']['known'] ||
+     ignoreFog || isActive)) {
+    if (mapDetails.data[hexName]['label']['value'] != "") {
+      if (!mapDetails.data[hexName]['label']['known']) ctx.globalAlpha = fogTransparency;
+      drawLabelObject(x, y, mapDetails.data[hexName]['label']['value']);
+      ctx.globalAlpha = 1;
+    }
+  }
+}
+
+function drawLabelObject(x, y, value) {
+  ctx.fillStyle = 'red';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  let fontsize = radius * 0.4;
+  ctx.font = fontsize+"px sans-serif";
+
+  ctx.lineWidth = radius * 0.05;
+  ctx.strokeStyle = 'white';
+  ctx.strokeText(value, x, (y - radius /2));
+
+  ctx.fillText(value, x, (y - radius /2));
 }
 
 function drawHighlight(x, y, highlight) {

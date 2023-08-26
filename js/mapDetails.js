@@ -32,6 +32,10 @@ function addNewMapHex(num) {
     aoi: {
       value: 0,
       known: false
+    },
+    label: {
+      value: "",
+      known: false
     }
   };
 }

@@ -21,6 +21,10 @@
     "aoi": {
       "value": 1,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x0y1": {
@@ -45,6 +49,10 @@
     "aoi": {
       "value": 0,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x0y2": {
@@ -66,6 +74,10 @@
     "aoi": {
       "value": 0,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y0": {
@@ -87,6 +99,10 @@
     "aoi": {
       "value": 0,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y1": {
@@ -111,6 +127,10 @@
     "aoi": {
       "value": 0,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y2": {
@@ -131,6 +151,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -153,6 +177,10 @@
     "aoi": {
       "value": 0,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x2y2": {
@@ -176,6 +204,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -201,6 +233,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x4y2": {
@@ -221,6 +257,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -246,6 +286,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x5y3": {
@@ -269,6 +313,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -295,6 +343,10 @@
     "aoi": {
       "value": 1,
       "known": true
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x0y3": {
@@ -315,6 +367,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -337,6 +393,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y3": {
@@ -357,6 +417,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -379,6 +443,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x2y4": {
@@ -399,6 +467,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -424,6 +496,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y4": {
@@ -444,6 +520,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -466,6 +546,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x2y5": {
@@ -486,6 +570,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -508,6 +596,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x4y4": {
@@ -528,6 +620,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -550,6 +646,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x5y4": {
@@ -570,6 +670,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -592,6 +696,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y1": {
@@ -612,6 +720,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -634,6 +746,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y0": {
@@ -654,6 +770,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -676,6 +796,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x4y1": {
@@ -696,6 +820,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -718,6 +846,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x5y1": {
@@ -738,6 +870,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -760,6 +896,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y0": {
@@ -780,6 +920,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -802,6 +946,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y2": {
@@ -822,6 +970,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -844,6 +996,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x0y5": {
@@ -864,6 +1020,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -886,6 +1046,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y5": {
@@ -907,6 +1071,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x2y6": {
@@ -927,6 +1095,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -952,6 +1124,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y4": {
@@ -975,6 +1151,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1000,6 +1180,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y4": {
@@ -1024,6 +1208,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y5": {
@@ -1044,6 +1232,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1066,6 +1258,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y6": {
@@ -1086,6 +1282,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1108,6 +1308,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y5": {
@@ -1128,6 +1332,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1150,6 +1358,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y3": {
@@ -1170,6 +1382,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1192,6 +1408,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y3": {
@@ -1212,6 +1432,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1234,6 +1458,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y0": {
@@ -1254,6 +1482,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1276,6 +1508,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x8y0": {
@@ -1296,6 +1532,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1318,6 +1558,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x8y1": {
@@ -1338,6 +1582,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1360,6 +1608,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y1": {
@@ -1380,6 +1632,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1402,6 +1658,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y3": {
@@ -1422,6 +1682,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1444,6 +1708,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x10y1": {
@@ -1464,6 +1732,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1486,6 +1758,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x10y3": {
@@ -1507,6 +1783,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x10y4": {
@@ -1527,6 +1807,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1552,6 +1836,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y0": {
@@ -1572,6 +1860,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1594,6 +1886,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y2": {
@@ -1615,6 +1911,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y3": {
@@ -1635,6 +1935,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1660,6 +1964,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y5": {
@@ -1680,6 +1988,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1702,6 +2014,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y6": {
@@ -1722,6 +2038,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1744,6 +2064,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y6": {
@@ -1765,6 +2089,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y6": {
@@ -1785,6 +2113,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1810,6 +2142,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y-1": {
@@ -1830,6 +2166,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1852,6 +2192,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x5y-1": {
@@ -1872,6 +2216,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1894,6 +2242,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y-1": {
@@ -1914,6 +2266,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1936,6 +2292,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y6": {
@@ -1956,6 +2316,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -1978,6 +2342,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y5": {
@@ -1998,6 +2366,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2020,6 +2392,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y2": {
@@ -2040,6 +2416,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2062,6 +2442,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y0": {
@@ -2082,6 +2466,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2104,6 +2492,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-2y2": {
@@ -2124,6 +2516,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2146,6 +2542,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-2y0": {
@@ -2166,6 +2566,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2188,6 +2592,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x2y-1": {
@@ -2208,6 +2616,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2230,6 +2642,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x0y-2": {
@@ -2250,6 +2666,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2272,6 +2692,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y1": {
@@ -2292,6 +2716,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2314,6 +2742,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y-1": {
@@ -2334,6 +2766,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2356,6 +2792,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y-2": {
@@ -2376,6 +2816,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2398,6 +2842,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y-3": {
@@ -2418,6 +2866,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2440,6 +2892,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y-3": {
@@ -2460,6 +2916,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2482,6 +2942,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y-2": {
@@ -2502,6 +2966,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2524,6 +2992,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x8y-1": {
@@ -2544,6 +3016,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2566,6 +3042,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x4y-1": {
@@ -2586,6 +3066,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2608,6 +3092,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-2y-3": {
@@ -2628,6 +3116,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2650,6 +3142,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y-3": {
@@ -2670,6 +3166,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2692,6 +3192,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x4y-3": {
@@ -2712,6 +3216,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2734,6 +3242,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y-2": {
@@ -2754,6 +3266,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2776,6 +3292,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x6y-3": {
@@ -2796,6 +3316,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2818,6 +3342,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y-2": {
@@ -2838,6 +3366,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2860,6 +3392,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x8y-3": {
@@ -2880,6 +3416,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2902,6 +3442,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y-3": {
@@ -2922,6 +3466,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2944,6 +3492,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x10y-2": {
@@ -2964,6 +3516,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -2986,6 +3542,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y-2": {
@@ -3006,6 +3566,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3028,6 +3592,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y3": {
@@ -3048,6 +3616,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3070,6 +3642,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y5": {
@@ -3090,6 +3666,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3112,6 +3692,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-3y7": {
@@ -3132,6 +3716,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3154,6 +3742,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-2y5": {
@@ -3174,6 +3766,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3196,6 +3792,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-2y3": {
@@ -3216,6 +3816,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3238,6 +3842,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x-1y7": {
@@ -3258,6 +3866,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3280,6 +3892,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x1y7": {
@@ -3300,6 +3916,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3322,6 +3942,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x3y7": {
@@ -3342,6 +3966,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3364,6 +3992,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x5y7": {
@@ -3384,6 +4016,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3406,6 +4042,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x7y7": {
@@ -3426,6 +4066,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3448,6 +4092,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x9y7": {
@@ -3468,6 +4116,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3490,6 +4142,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x11y7": {
@@ -3510,6 +4166,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3532,6 +4192,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y6": {
@@ -3552,6 +4216,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3574,6 +4242,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y4": {
@@ -3594,6 +4266,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3616,6 +4292,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y2": {
@@ -3636,6 +4316,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3658,6 +4342,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y0": {
@@ -3678,6 +4366,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   },
@@ -3700,6 +4392,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y-2": {
@@ -3721,6 +4417,10 @@
     "aoi": {
       "value": 0,
       "known": false
+    },
+    "label": {
+      "value": "",
+      "known": false
     }
   },
   "x12y-3": {
@@ -3741,6 +4441,10 @@
     },
     "aoi": {
       "value": 0,
+      "known": false
+    },
+    "label": {
+      "value": "",
       "known": false
     }
   }

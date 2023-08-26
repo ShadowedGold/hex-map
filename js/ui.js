@@ -1,8 +1,3 @@
-function drawActiveHexAndUI() {
-  drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], "yellow");
-  drawHexUI(activeHex[2], activeHex[3]);
-}
-
 function handleHexButtonOutcome(button) {
   switch (activeHexUI) {
     case undefined:
@@ -22,6 +17,12 @@ function handleHexButtonOutcome(button) {
         case "aoi1":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
           activeHexUI = "aoi";
+          break;
+        case "label":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          // open label dialogue
+          let label = prompt("Enter a label", getLabel([activeHex[0], activeHex[1]]));
+          if (label != null) updateLabel(label);
           break;
         case "clear":
           if (confirm("Are you sure you want to clear the hex?") == true) {
@@ -63,6 +64,10 @@ function handleHexButtonOutcome(button) {
         case "aoi1":
           prepHexForUpdate([activeHex[0], activeHex[1]]);
           toggleVisibility('aoi');
+          break;
+        case "label":
+          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          toggleVisibility('label');
           break;
       }
       break;
@@ -208,10 +213,10 @@ function getActiveHexUIList() {
   switch (activeHexUI) {
     case undefined:
       // first level of ui
-      return ["cancel", "eye", "biomes", "roads", "aoi1", "clear"];
+      return ["cancel", "eye", "biomes", "roads", "aoi1", "label", "clear"];
     case "eye":
       // toggle visibility ui
-      return ["cancel", "all", "biomes", "roads", "aoi1"];
+      return ["cancel", "all", "biomes", "roads", "aoi1", "label"];
     case "biomes":
       // alter biomes
       return ["cancel", "hex", "tri0"];
@@ -383,6 +388,10 @@ function drawButton(x, y, button) {
     case "road5":
       drawRoadObject(x, y, buttonRadius, [5]);
       break;
+    case "label":
+      emojiFontStyle();
+      ctx.fillText("🏷️", x, y); //🔤📍
+      break;
   }
 
   pathButtonOutline(x, y);
@@ -443,6 +452,12 @@ function updateAoi(aoi) {
   mapDetails.data[hexName]['aoi']['value'] = aoi;
 }
 
+function updateLabel(label) {
+  let hexName = getHexName([activeHex[0],activeHex[1]]);
+
+  mapDetails.data[hexName]['label']['value'] = label;
+}
+
 function toggleVisibility(feature) {
   let hexName = getHexName([activeHex[0],activeHex[1]]);
 
@@ -471,6 +486,9 @@ function getHexButtonStateColour(button) {
           break;
         case "aoi1":
           if (mapDetails.data[hexName]['aoi']['known']) colour = 'yellow';
+          break;
+        case "label":
+          if (mapDetails.data[hexName]['label']['known']) colour = 'yellow';
           break;
       }
       break;
