@@ -1,6 +1,8 @@
-// input tracking for drag & pinch
+// input tracking for drag, pinch & long press
 var startInputPos;
 var endInputPos;
+var timerId = null;
+var longPress = false;
 var dragging = false;
 var multiTouch = {
   active: false,
@@ -24,18 +26,26 @@ canvas.width = window.innerWidth - ((padding + 1) * 2 * window.devicePixelRatio)
 canvas.height = window.innerHeight - ((padding + 1) * 2 * window.devicePixelRatio);
 canvas.addEventListener('mousedown', (e) => {
   canvas.addEventListener('mousemove', handleInputPosition);
+  timerId = new LongPressTimer();
   handleInputPosition(e);
 });
-canvas.addEventListener('touchstart', handleInputPosition);
+canvas.addEventListener('touchstart', (e) => {
+  timerId = new LongPressTimer();
+  handleInputPosition(e);
+});
 canvas.addEventListener('touchmove', handleInputPosition);
 canvas.addEventListener('mouseup', (e) => {
   canvas.removeEventListener('mousemove', handleInputPosition);
+  if (!longPress && !timerId.cleared) timerId.clear();
   handleInputPosition(e);
 });
 canvas.addEventListener('mouseout', () => {
   canvas.removeEventListener('mousemove', handleInputPosition);
 });
-canvas.addEventListener('touchend', handleInputPosition);
+canvas.addEventListener('touchend', (e) => {
+  if (!longPress && !timerId.cleared) timerId.clear();
+  handleInputPosition(e);
+});
 canvas.addEventListener('mousemove', updateCursor);
 
 document.body.appendChild(canvas);
@@ -55,6 +65,7 @@ var hexCoords = [];
 var hexUICoords = [];
 var menuUICoords = [];
 var activeHex = undefined;
+var activeHexes = [];
 var activeHexUI = undefined;
 var activeTri = undefined;
 var menuOpen = false;

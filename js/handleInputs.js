@@ -58,8 +58,15 @@ function handleRelease(x, y) {
         }
       } else {
         // if no hex ui button hit...
-        activeHex = undefined;
-        activeHexUI = undefined;
+        if (longPress) {
+          let hex = getHexFromXY(x, y);
+          if (activeHexes.includes(hex)) activeHexes.splice(activeHexes.indexOf(hex), 1);
+          else activeHexes.push(hex);
+        } else {
+          activeHex = undefined;
+          activeHexes = [];
+          activeHexUI = undefined;
+        }
       }
 
       redrawAll();
@@ -67,6 +74,7 @@ function handleRelease(x, y) {
       // no active hex, and we're in editMode, set active hex
       let hex = getHexFromXY(x, y);
       activeHex = hex;
+      activeHexes.push(hex);
       redrawAll();
     }
   }
@@ -174,6 +182,20 @@ function getH(t1, t2) {
                     t1.clientY - t2.clientY);
 }
 
+function LongPressTimer() {
+  //console.log('start press');
+  var id = setTimeout(() => {
+    longPress = true;
+    //console.log('long press');
+  }, 500);
+  this.cleared = false;
+  this.clear = () => {
+    this.cleared = true;
+    clearTimeout(id);
+    //console.log('clear timer');
+  };
+}
+
 function handleInputPosition(e) {
   if (e.type == "touchstart" && e.touches.length > 1) {
     multiTouch.active = true;
@@ -222,6 +244,13 @@ function handleInputPosition(e) {
     if (e.type == "mousemove" || e.type == "touchmove") {
       dragging = true;
       canvas.style.cursor = "grabbing"; //all-scroll
+      if (longPress) {
+        longPress = false;
+        timerId.cleared = true;
+        //console.log('end long press');
+      } else if (!timerId.cleared) {
+        timerId.clear();
+      }
       handleRelease(endInputPos.x, endInputPos.y);
     }
     if (e.type == "mouseup") {
@@ -230,6 +259,13 @@ function handleInputPosition(e) {
     if ((e.type == "mouseup" || e.type == "touchend") && dragging) {
       dragging = false;
       canvas.style.cursor = (editMode) ? "pointer" : "grab";
+    }
+    if ((e.type == "mouseup" || e.type == "touchend") && !dragging) {
+      if (longPress) {
+        longPress = false;
+        timerId.cleared = true;
+        //console.log('end long press');
+      }
     }
   }
 }
