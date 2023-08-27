@@ -44,26 +44,41 @@ function handleRelease(x, y) {
       // if we are dragging
       handleDrag(endInputPos.x - startInputPos.x, endInputPos.y - startInputPos.y);
       startInputPos = {x: x, y: y};
-    } else if (editMode && activeHex != undefined) {
-      // a hex is active, and we're in edit mode, look at hex ui buttons
-      button = getButton(x, y, hexUICoords);
-      if (button != undefined) {
-        // if hex ui button hit...
-        if (button[0] == 0 && activeHexUI == undefined) {
-          // if top level cancel button hit...
-          activeHex = undefined;
-        } else {
-          // button other than top level cancel button hit...
-          handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
+    } else if (editMode && activeHexes.length > 0) {
+      // a hex is active, and we're in edit mode...
+      if (activeHexes.length == 1) {
+        // look at hex ui buttons
+        button = getButton(x, y, hexUICoords);
+        if (button != undefined) {
+          // if hex ui button hit...
+          if (button[0] == 0 && activeHexUI == undefined) {
+            // if top level cancel button hit...
+            activeHexes = [];
+          } else {
+            // button other than top level cancel button hit...
+            handleHexButtonOutcome(getActiveHexUIList()[button[0]]);
+          }
         }
       } else {
-        // if no hex ui button hit...
+        // look at the multi-select buttons;
+        button = getButton(x, y, multiHexUICoords);
+        if (button != undefined) {
+          // if multi-hex ui button hit...
+        }
+      }
+      if (button == undefined) {
+        // if no hex/multi-hex ui button hit...
         if (longPress) {
           let hex = getHexFromXY(x, y);
-          if (activeHexes.includes(hex)) activeHexes.splice(activeHexes.indexOf(hex), 1);
+
+          function compareHexes(givenHex) {
+            if (givenHex[0] == hex[0] && givenHex[1] == hex[1])
+            return true;
+          }
+
+          if (activeHexes.find(compareHexes)) activeHexes.splice(activeHexes.findIndex(compareHexes), 1);
           else activeHexes.push(hex);
         } else {
-          activeHex = undefined;
           activeHexes = [];
           activeHexUI = undefined;
         }
@@ -73,7 +88,6 @@ function handleRelease(x, y) {
     } else if (editMode) {
       // no active hex, and we're in editMode, set active hex
       let hex = getHexFromXY(x, y);
-      activeHex = hex;
       activeHexes.push(hex);
       redrawAll();
     }
@@ -118,15 +132,17 @@ function handleDrag(x, y) {
   mapHexOffset[0] -= offsetX;
   mapHexOffset[1] -= offsetY;
 
-  if (activeHex != undefined) {
-    activeHex[0] -= offsetX;
-    activeHex[1] -= offsetY;
+  if (activeHexes.length > 0) {
+    activeHexes.forEach((givenHex, i) => {
+      activeHexes[i][0] -= offsetX;
+      activeHexes[i][1] -= offsetY;
+    });
 
-    if (activeHex[0] > dimensions.cols-2 ||
-        activeHex[0] < 1 ||
-        activeHex[1] > dimensions.rows-3 ||
-        activeHex[1] < 0) {
-      activeHex = undefined;
+    if (activeHexes[0][0] > dimensions.cols-2 ||
+        activeHexes[0][0] < 1 ||
+        activeHexes[0][1] > dimensions.rows-3 ||
+        activeHexes[0][1] < 0) {
+      activeHexes = [];
       activeHexUI = undefined;
     }
   }
@@ -168,9 +184,11 @@ function updateGridPositions(x, y) {
   mapHexOffset[0] -= offsetX;
   mapHexOffset[1] -= offsetY;
 
-  if (activeHex != undefined) {
-    activeHex[0] -= offsetX;
-    activeHex[1] -= offsetY;
+  if (activeHexes.length > 0) {
+    activeHexes.forEach((givenHex, i) => {
+      activeHexes[i][0] -= offsetX;
+      activeHexes[i][1] -= offsetY;
+    });
   }
 
   handleDrag(x - secondHex[2] - cursorDif.x,

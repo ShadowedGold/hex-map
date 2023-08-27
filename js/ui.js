@@ -4,29 +4,29 @@ function handleHexButtonOutcome(button) {
       // first level of ui
       switch (button) {
         case "eye":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           activeHexUI = "eye";
           break;
         case "biomes":
           activeHexUI = "biomes";
           break;
         case "roads":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           activeHexUI = "roads";
           break;
         case "aoi1":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           activeHexUI = "aoi";
           break;
         case "label":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           // open label dialogue
-          let label = prompt("Enter a label", getLabel([activeHex[0], activeHex[1]]));
+          let label = prompt("Enter a label", getLabel([activeHexes[0][0], activeHexes[0][1]]));
           if (label != null) updateLabel(label);
           break;
         case "clear":
           if (confirm("Are you sure you want to clear the hex?") == true) {
-            mapDetails.clearHex(getHexName(activeHex));
+            mapDetails.clearHex(getHexName(activeHexes[0]));
           }
           break;
       }
@@ -38,9 +38,9 @@ function handleHexButtonOutcome(button) {
           activeHexUI = undefined;
           break;
         case "all":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           const features = ['biomes', 'roads', 'aoi'];
-          let hexName = getHexName([activeHex[0],activeHex[1]]);
+          let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
           if (features.every(feature => {
             return mapDetails.data[hexName][feature]['known'];
           })) {
@@ -54,19 +54,19 @@ function handleHexButtonOutcome(button) {
           }
           break;
         case "biomes":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           toggleVisibility('biomes');
           break;
         case "roads":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           toggleVisibility('roads');
           break;
         case "aoi1":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           toggleVisibility('aoi');
           break;
         case "label":
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           toggleVisibility('label');
           break;
       }
@@ -93,7 +93,7 @@ function handleHexButtonOutcome(button) {
           break;
         default:
           activeHexUI = "triColours";
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           activeTri = Number(button.substring(3));
           break;
       }
@@ -105,7 +105,7 @@ function handleHexButtonOutcome(button) {
           activeHexUI = "biomes";
           break;
         default:
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           updateHexBiome(button);
           break;
       }
@@ -117,7 +117,7 @@ function handleHexButtonOutcome(button) {
           activeHexUI = "tri";
           break;
         default:
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           updateTriBiome(button);
           break;
       }
@@ -129,7 +129,7 @@ function handleHexButtonOutcome(button) {
           activeHexUI = undefined;
           break;
         default:
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           updateRoads(Number(button.substring(4)));
           break;
       }
@@ -141,7 +141,7 @@ function handleHexButtonOutcome(button) {
           activeHexUI = undefined;
           break;
         default:
-          prepHexForUpdate([activeHex[0], activeHex[1]]);
+          prepHexForUpdate([activeHexes[0][0], activeHexes[0][1]]);
           updateAoi(Number(button.substring(3)));
           break;
       }
@@ -166,7 +166,7 @@ function handleMenuButtonOutcome(button) {
     case "pencil":
       editMode = !editMode;
       if (!editMode) {
-        activeHex = undefined;
+        activeHexes = [];
         activeHexUI = undefined;
       }
       break;
@@ -423,7 +423,7 @@ function pathButtonOutline(x, y) {
 }
 
 function updateHexBiome(biome) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   for (let i = 0; i < shapeType; i++) {
     mapDetails.data[hexName]['biomes']['value'][i] = biome;
@@ -431,13 +431,13 @@ function updateHexBiome(biome) {
 }
 
 function updateTriBiome(biome) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   mapDetails.data[hexName]['biomes']['value'][activeTri] = biome;
 }
 
 function updateRoads(road) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   if (mapDetails.data[hexName]['roads']['value'].includes(road)) {
     mapDetails.data[hexName]['roads']['value'].splice(mapDetails.data[hexName]['roads']['value'].indexOf(road),1);
@@ -447,25 +447,25 @@ function updateRoads(road) {
 }
 
 function updateAoi(aoi) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   mapDetails.data[hexName]['aoi']['value'] = aoi;
 }
 
 function updateLabel(label) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   mapDetails.data[hexName]['label']['value'] = label;
 }
 
 function toggleVisibility(feature) {
-  let hexName = getHexName([activeHex[0],activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0],activeHexes[0][1]]);
 
   mapDetails.data[hexName][feature]['known'] = !mapDetails.data[hexName][feature]['known'];
 }
 
 function getHexButtonStateColour(button) {
-  let hexName = getHexName([activeHex[0], activeHex[1]]);
+  let hexName = getHexName([activeHexes[0][0], activeHexes[0][1]]);
   let colour = 'grey';
 
   switch (activeHexUI) {
@@ -564,7 +564,7 @@ function drawMenuUI() {
 function clearMapData() {
   if (confirm("Are you sure you want to clear the map?") == true) {
     mapDetails.clearAllHexes();
-    activeHex = undefined;
+    activeHexes = [];
     activeHexUI = undefined;
     redrawAll();
   }

@@ -54,7 +54,7 @@ function applySaveData() {
   showCoords = saveData.showCoords;
   mapHexOffset = saveData.mapHexOffset;
   mapDetails.data = saveData.mapDetails;
-  activeHex = undefined;
+  activeHexes = [];
   activeHexUI = undefined;
 
   radius = getRadius();

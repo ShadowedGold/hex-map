@@ -63,8 +63,8 @@ var dimensions = getDimensions();
 var offsets = getOffsets();
 var hexCoords = [];
 var hexUICoords = [];
+var multiHexUICoords = [];
 var menuUICoords = [];
-var activeHex = undefined;
 var activeHexes = [];
 var activeHexUI = undefined;
 var activeTri = undefined;
@@ -126,24 +126,40 @@ function setUpViewport() {
   document.getElementsByTagName('body')[0].style.padding = (padding * window.devicePixelRatio)+"px";
 }
 
-function updateActiveHexXY() {
-  hexCoords.some(hex => {
-    if (activeHex[0] == hex[0] && activeHex[1] == hex[1]) {
-      activeHex[2] = hex[2];
-      activeHex[3] = hex[3];
-      return true;
-    }
+function updateActiveHexesXY() {
+  activeHexes.forEach((givenHex, i) => {
+    hexCoords.some(hex => {
+      if (givenHex[0] == hex[0] && givenHex[1] == hex[1]) {
+        activeHexes[i][2] = hex[2];
+        activeHexes[i][3] = hex[3];
+        return true;
+      }
+    });
   });
 }
 
 function redrawAll(activeHexXYChanged) {
   drawGrid();
-  if (activeHex != undefined) {
-    if (activeHexXYChanged) updateActiveHexXY();
-    drawHex(activeHex[2], activeHex[3], [activeHex[0], activeHex[1]], "yellow");
+  if (activeHexes.length > 0) {
+    if (activeHexXYChanged) updateActiveHexesXY();
+
+    if (activeHexes.length > 1) {
+      activeHexes.forEach(givenHex => {
+        drawHex(givenHex[2], givenHex[3], [givenHex[0], givenHex[1]], "white");
+      });
+    } else {
+      drawHex(activeHexes[0][2], activeHexes[0][3], [activeHexes[0][0], activeHexes[0][1]], "yellow");
+    }
   }
   drawLabels();
-  if (activeHex != undefined) drawHexUI(activeHex[2], activeHex[3]);
+  if (activeHexes.length > 0) {
+    if (activeHexes.length > 1) {
+      
+    } else {
+      drawHexUI(activeHexes[0][2], activeHexes[0][3]);
+    }
+    
+  }
   drawMenuUI();
 }
 
@@ -283,9 +299,9 @@ function getHexFromXY(canvasX, canvasY) {
 function biomeVisible(num) {
   let hexName = getHexName(num);
   
-  let isActive = ((activeHex != undefined) &&
-                  (num[0] == activeHex[0]) &&
-                  (num[1] == activeHex[1])) ? true : false;
+  let isActive = ((activeHexes.length > 0) &&
+                  (num[0] == activeHexes[0][0]) &&
+                  (num[1] == activeHexes[0][1])) ? true : false;
 
   if ((mapDetails.data.hasOwnProperty(hexName) &&
        !mapDetails.data[hexName]['biomes']['known'] &&
@@ -298,9 +314,9 @@ function biomeVisible(num) {
 
 function drawBiome(x, y, num) {
   let hexName = getHexName(num);
-  let isActive = ((activeHex != undefined) &&
-                  (num[0] == activeHex[0]) &&
-                  (num[1] == activeHex[1])) ? true : false;
+  let isActive = ((activeHexes.length > 0) &&
+                  (num[0] == activeHexes[0][0]) &&
+                  (num[1] == activeHexes[0][1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
      (mapDetails.data[hexName]['biomes']['known'] ||
      ignoreFog || isActive)) {
@@ -351,9 +367,9 @@ function getBiomeColour(biome) {
 
 function drawRoad(x, y, num) {
   let hexName = getHexName(num);
-  let isActive = ((activeHex != undefined) &&
-                  (num[0] == activeHex[0]) &&
-                  (num[1] == activeHex[1])) ? true : false;
+  let isActive = ((activeHexes.length > 0) &&
+                  (num[0] == activeHexes[0][0]) &&
+                  (num[1] == activeHexes[0][1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
      (mapDetails.data[hexName]['roads']['known'] ||
       ignoreFog || isActive)) {
@@ -384,9 +400,9 @@ function drawRoadObject(x, y, r, roadNodes, opt) {
 
 function drawAoi(x, y, num) {
   let hexName = getHexName(num);
-  let isActive = ((activeHex != undefined) &&
-                  (num[0] == activeHex[0]) &&
-                  (num[1] == activeHex[1])) ? true : false;
+  let isActive = ((activeHexes.length > 0) &&
+                  (num[0] == activeHexes[0][0]) &&
+                  (num[1] == activeHexes[0][1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
      (mapDetails.data[hexName]['aoi']['known'] ||
      ignoreFog || isActive)) {
@@ -452,9 +468,9 @@ function drawAoiObject(x, y, r, value) {
 
 function drawLabel(x, y, num) {
   let hexName = getHexName(num);
-  let isActive = ((activeHex != undefined) &&
-                  (num[0] == activeHex[0]) &&
-                  (num[1] == activeHex[1])) ? true : false;
+  let isActive = ((activeHexes.length > 0) &&
+                  (num[0] == activeHexes[0][0]) &&
+                  (num[1] == activeHexes[0][1])) ? true : false;
   if (mapDetails.data.hasOwnProperty(hexName) &&
      (mapDetails.data[hexName]['label']['known'] ||
      ignoreFog || isActive)) {
